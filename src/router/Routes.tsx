@@ -1,4 +1,4 @@
-import ShopView from "view/ShopView"
+import InventoryPage from "view/InventoryPage"
 import EmptyPage from "view/EmptyPage"
 
 export default class Route {
@@ -14,6 +14,6 @@ export default class Route {
 }
 
 export const ROUTES = {
-	shopView: new Route("/", "Shop view", ShopView),
+	inventoryPage: new Route("/", "Inventory page", InventoryPage),
 	emptyPage: new Route("/empty", "Empty page", EmptyPage)
 }

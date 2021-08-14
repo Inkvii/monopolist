@@ -19,7 +19,7 @@ function App() {
 			<Grid item xs={12} sm={12} md={9} lg={10} xl={10}>
 				<RecoilRoot>
 					<Switch>
-						<Route exact path={ROUTES.shopView.path} component={ROUTES.shopView.component}/>
+						<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
 						<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
 					</Switch>
 				</RecoilRoot>

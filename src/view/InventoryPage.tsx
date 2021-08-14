@@ -6,7 +6,7 @@ import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
 import PlayerStore from "context/PlayerStore"
 
-export default function ShopView() {
+export default function InventoryPage() {
 
 	const playerStore = useContext(PlayerStore)
 
