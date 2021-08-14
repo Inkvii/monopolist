@@ -14,6 +14,6 @@ export default class Route {
 }
 
 export const ROUTES = {
-	"shopView": new Route("/", "Shop view", ShopView),
-	"emptyPage": new Route("/empty", "Empty page", EmptyPage)
+	shopView: new Route("/", "Shop view", ShopView),
+	emptyPage: new Route("/empty", "Empty page", EmptyPage)
 }
