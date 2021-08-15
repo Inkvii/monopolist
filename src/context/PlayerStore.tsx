@@ -12,23 +12,6 @@ export class PlayerStore {
 		makeAutoObservable(this)
 	}
 
-	get money(): number {
-		return this._money
-	}
-
-	set money(value: number) {
-		this._money = value
-	}
-
-
-	get ownedResources(): ResourceHolder[] {
-		return this._ownedResources
-	}
-
-	set ownedResources(value: ResourceHolder[]) {
-		this._ownedResources = value
-	}
-
 	incrementOwnedResourceAmount(resourceName: string) {
 		console.info("incrementOwnedResourceAmount with name " + resourceName)
 		this.ownedResources = this.ownedResources.map(value => {
@@ -46,9 +29,25 @@ export class PlayerStore {
 		})
 		this.ownedResources.push({
 			resource: RESOURCE.iron,
-			gainPerTick: 66,
-			amount: 997
+			gainPerTick: 1.5,
+			amount: 10
 		})
+	}
+
+	get money(): number {
+		return this._money
+	}
+
+	set money(value: number) {
+		this._money = value
+	}
+
+	get ownedResources(): ResourceHolder[] {
+		return this._ownedResources
+	}
+
+	set ownedResources(value: ResourceHolder[]) {
+		this._ownedResources = value
 	}
 }
 

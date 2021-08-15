@@ -3,10 +3,10 @@ import {Route, Switch, useLocation} from "react-router-dom"
 import {Grid} from "@material-ui/core"
 import LeftMenu from "component/LeftMenu"
 import {ROUTES} from "router/Routes"
-import {RecoilRoot} from "recoil"
 import * as workerTimers from "worker-timers"
 import doStuff from "background/Heartbeat"
 import {playerContext} from "context/PlayerStore"
+import TopPanel from "component/TopPanel"
 
 function App() {
 
@@ -26,21 +26,22 @@ function App() {
 	}, [])
 
 	return (
-
 		<Grid container>
+			<Grid item xs={12}>
+				<TopPanel/>
+			</Grid>
 			<Grid item xs={12} sm={12} md={3} lg={2} xl={2}>
 				<LeftMenu currentLocation={location.pathname}/>
 			</Grid>
 
 			<Grid item xs={12} sm={12} md={9} lg={10} xl={10}>
-				<RecoilRoot>
-					<Switch>
-						<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
-						<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
-					</Switch>
-				</RecoilRoot>
+				<Switch>
+					<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
+					<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
+				</Switch>
 			</Grid>
 		</Grid>
+
 	)
 }
 

@@ -17,9 +17,7 @@ export default function InventoryPage() {
 	return useObserver(() =>
 		<>
 			<MoneyCardComponent money={playerStore.money}/>
-
 			<Box sx={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)"}} style={{margin: 40, gap: 10}}>
-
 				{
 					playerStore.ownedResources.map(holder => (
 							<Card key={holder.resource.name} className={"hoverable"} onClick={() => onClickEvent(holder.resource.name)}>

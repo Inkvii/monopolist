@@ -17,7 +17,7 @@ export default function ResourceBox(props: Props) {
 					<Typography variant={"subtitle1"}>{props.resourceHolder.resource.name}</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<Typography variant={"body2"}>{props.resourceHolder.amount}</Typography>
+					<Typography variant={"body2"}>{Math.floor(props.resourceHolder.amount)}</Typography>
 				</Grid>
 				<Grid item xs={12}>
 					<Typography variant={"body2"}>(+{props.resourceHolder.gainPerTick}/min)</Typography>

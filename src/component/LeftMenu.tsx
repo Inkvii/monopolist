@@ -14,14 +14,15 @@ export default function LeftMenu(props: Props) {
 	const activeStyle = {backgroundColor: "rgba(5,128,255,0.22)"}
 
 	return (
-		<List>
+		<List style={{...normalStyle, paddingTop: 0}}>
 			{
 				Object.values(ROUTES).map((route: Route, index) => {
 					const chosenStyle = route.path === props.currentLocation ? activeStyle : normalStyle
 					return (
 						<ListItem button key={route.path} style={chosenStyle} onClick={() => history.push(route.path)}>
 							<ListItemText primary={route.menuLabel}/>
-						</ListItem>)
+						</ListItem>
+					)
 				})
 			}
 		</List>
