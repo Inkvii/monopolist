@@ -3,13 +3,34 @@ import {ResourceHolder} from "interfaces"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
 
+
+export interface PlayerContext extends PlayerStore {
+}
+
 class PlayerStore {
-	money: number = 0
-	ownedResources: ResourceHolder[] = []
+	private _money: number = 0
+
+	get money(): number {
+		return this._money
+	}
 
 	constructor() {
 		this.generateDefaultInstance() //for testing purposes only
 		makeAutoObservable(this)
+	}
+
+	set money(value: number) {
+		this._money = value
+	}
+
+	private _ownedResources: ResourceHolder[] = []
+
+	get ownedResources(): ResourceHolder[] {
+		return this._ownedResources
+	}
+
+	set ownedResources(value: ResourceHolder[]) {
+		this._ownedResources = value
 	}
 
 	incrementOwnedResourceAmount(resourceName: string) {

@@ -1,5 +1,6 @@
 import InventoryPage from "view/InventoryPage"
 import EmptyPage from "view/EmptyPage"
+import React from "react"
 
 export default class Route {
 	path: string
