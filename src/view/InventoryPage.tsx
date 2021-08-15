@@ -5,6 +5,8 @@ import "css.css"
 import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
 import {playerContext} from "context/PlayerStore"
+import ResourceProducerBox from "component/resource/ResourceProducerBox"
+import {RESOURCE} from "constant/Constants"
 
 export default function InventoryPage() {
 
@@ -27,6 +29,58 @@ export default function InventoryPage() {
 					)
 				}
 			</Box>
+			<Box sx={{display: "grid", gridTemplateColumns: "repeat(2, 1fr)"}} style={{margin: 40, gap: 10}}>
+				<ResourceProducerBox resourceProducer={{
+					name: "Lumbermill",
+					costToUpgrade: [{
+						resource: RESOURCE.iron,
+						amount: 120,
+						gainPerTick: 0
+					}, {
+						resource: RESOURCE.wood,
+						amount: 50,
+						gainPerTick: 0
+					}
+					],
+					image: "Lumbermill image",
+					level: 1,
+					produces: [
+						{
+							resource: RESOURCE.wood,
+							amount: 2,
+							gainPerTick: 0
+						}
+					],
+					maintenanceFee: 13,
+					revenue: 20
+				}}/>
+
+				<ResourceProducerBox resourceProducer={{
+					name: "Lumbermill",
+					costToUpgrade: [{
+						resource: RESOURCE.iron,
+						amount: 120,
+						gainPerTick: 0
+					}, {
+						resource: RESOURCE.wood,
+						amount: 50,
+						gainPerTick: 0
+					}
+					],
+					image: "Lumbermill image",
+					level: 1,
+					produces: [
+						{
+							resource: RESOURCE.wood,
+							amount: 2,
+							gainPerTick: 0
+						}
+					],
+					maintenanceFee: 13,
+					revenue: 20
+				}}/>
+			</Box>
+
 		</>
 	)
 }
