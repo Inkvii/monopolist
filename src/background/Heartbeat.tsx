@@ -1,7 +1,7 @@
-import {PlayerContext} from "context/PlayerStore"
+import {PlayerStore} from "context/PlayerStore"
 import {RESOURCE} from "constant/Constants"
 
-export default function doStuff(store: PlayerContext) {
+export default function doStuff(store: PlayerStore) {
 	store.money += 1
 	store.incrementOwnedResourceAmount(RESOURCE.wood.name)
 

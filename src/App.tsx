@@ -6,13 +6,13 @@ import {ROUTES} from "router/Routes"
 import {RecoilRoot} from "recoil"
 import * as workerTimers from "worker-timers"
 import doStuff from "background/Heartbeat"
-import PlayerStore from "context/PlayerStore"
+import {playerContext} from "context/PlayerStore"
 
 function App() {
 
 	const location = useLocation()
 
-	const playerStore = useContext(PlayerStore)
+	const playerStore = useContext(playerContext)
 
 	useEffect(() => {
 		const heartbeat = workerTimers.setInterval(() => {

@@ -3,11 +3,7 @@ import {ResourceHolder} from "interfaces"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
 
-
-export interface PlayerContext extends PlayerStore {
-}
-
-class PlayerStore {
+export class PlayerStore {
 	private _money: number = 0
 
 	get money(): number {
@@ -56,4 +52,5 @@ class PlayerStore {
 	}
 }
 
-export default createContext(new PlayerStore())
+export const playerContext = createContext(new PlayerStore())
+

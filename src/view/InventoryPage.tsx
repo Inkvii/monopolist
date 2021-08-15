@@ -4,11 +4,11 @@ import MoneyCardComponent from "component/MoneyCardComponent"
 import "css.css"
 import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
-import PlayerStore from "context/PlayerStore"
+import {playerContext} from "context/PlayerStore"
 
 export default function InventoryPage() {
 
-	const playerStore = useContext(PlayerStore)
+	const playerStore = useContext(playerContext)
 
 	const onClickEvent = (name: string) => {
 		playerStore.incrementOwnedResourceAmount(name)
