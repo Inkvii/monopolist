@@ -5,21 +5,21 @@ import {createContext} from "react"
 
 export class PlayerStore {
 	private _money: number = 0
-
-	get money(): number {
-		return this._money
-	}
+	private _ownedResources: ResourceHolder[] = []
 
 	constructor() {
 		this.generateDefaultInstance() //for testing purposes only
 		makeAutoObservable(this)
 	}
 
+	get money(): number {
+		return this._money
+	}
+
 	set money(value: number) {
 		this._money = value
 	}
 
-	private _ownedResources: ResourceHolder[] = []
 
 	get ownedResources(): ResourceHolder[] {
 		return this._ownedResources
