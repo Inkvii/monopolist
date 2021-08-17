@@ -38,6 +38,7 @@ function App() {
 				<Switch>
 					<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
 					<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
+					<Route exact path={ROUTES.resourceProducerDetail.path} component={ROUTES.resourceProducerDetail.component}/>
 				</Switch>
 			</Grid>
 		</Grid>

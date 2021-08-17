@@ -11,7 +11,7 @@ export interface Player {
 	ownedResources: ResourceHolder[]
 }
 
-export interface ResourceProducer {
+export interface Building {
 	name: string,
 	image: string,
 	level: number,

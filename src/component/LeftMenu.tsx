@@ -16,14 +16,16 @@ export default function LeftMenu(props: Props) {
 	return (
 		<List style={{...normalStyle, paddingTop: 0}}>
 			{
-				Object.values(ROUTES).map((route: Route, index) => {
-					const chosenStyle = route.path === props.currentLocation ? activeStyle : normalStyle
-					return (
-						<ListItem button key={route.path} style={chosenStyle} onClick={() => history.push(route.path)}>
-							<ListItemText primary={route.menuLabel}/>
-						</ListItem>
-					)
-				})
+				Object.values(ROUTES)
+					.filter((route: Route) => !route.isHiddenFromMenu)
+					.map((route: Route, index) => {
+						const chosenStyle = route.path === props.currentLocation ? activeStyle : normalStyle
+						return (
+							<ListItem button key={route.path} style={chosenStyle} onClick={() => history.push(route.path)}>
+								<ListItemText primary={route.menuLabel}/>
+							</ListItem>
+						)
+					})
 			}
 		</List>
 	)
