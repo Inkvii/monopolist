@@ -23,6 +23,7 @@ function App() {
 		return (() => {
 			workerTimers.clearInterval(heartbeat)
 		})
+		// eslint-disable-next-line
 	}, [])
 
 	return (

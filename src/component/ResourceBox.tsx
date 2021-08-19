@@ -1,8 +1,8 @@
 import {Grid, Typography} from "@material-ui/core"
-import {ResourceHolder} from "interfaces"
+import {ResourceContext} from "interfaces"
 
 interface Props {
-	resourceHolder: ResourceHolder
+	resourceHolder: ResourceContext
 }
 
 export default function ResourceBox(props: Props) {

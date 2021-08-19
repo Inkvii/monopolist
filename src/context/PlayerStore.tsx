@@ -1,11 +1,11 @@
 import {RESOURCE} from "constant/Constants"
-import {ResourceHolder} from "interfaces"
+import {ResourceContext} from "interfaces"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
 
 export class PlayerStore {
 	private _money: number = 0
-	private _ownedResources: ResourceHolder[] = []
+	private _ownedResources: ResourceContext[] = []
 
 	constructor() {
 		this.generateDefaultInstance() //for testing purposes only
@@ -42,11 +42,11 @@ export class PlayerStore {
 		this._money = value
 	}
 
-	get ownedResources(): ResourceHolder[] {
+	get ownedResources(): ResourceContext[] {
 		return this._ownedResources
 	}
 
-	set ownedResources(value: ResourceHolder[]) {
+	set ownedResources(value: ResourceContext[]) {
 		this._ownedResources = value
 	}
 }

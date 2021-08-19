@@ -1,22 +1,28 @@
 import Resource from "constant/Constants"
 
-export interface ResourceHolder {
+export interface ResourceContext {
 	resource: Resource
 	amount: number
 	gainPerTick: number
 }
 
+
+export interface BuildingResource {
+	resource: Resource
+	amount: number
+}
+
 export interface Player {
 	money: number
-	ownedResources: ResourceHolder[]
+	ownedResources: ResourceContext[]
 }
 
 export interface Building {
 	name: string,
 	image: string,
 	level: number,
-	costToUpgrade: ResourceHolder[] // TODO refactor this, gain per tick should not be part of the interface
-	maintenanceFee: number,
-	revenue?: number,
-	produces?: ResourceHolder[]
+	costToUpgrade: BuildingResource[]
+	maintenanceFee: BuildingResource[],
+	revenue?: BuildingResource[],
+	produces?: BuildingResource[]
 }

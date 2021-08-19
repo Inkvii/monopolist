@@ -1,12 +1,11 @@
 import {Box, Card, Grid} from "@material-ui/core"
 import ResourceBox from "component/ResourceBox"
 import MoneyCardComponent from "component/MoneyCardComponent"
-import "css.css"
 import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
 import {playerContext} from "context/PlayerStore"
 import BuildingComponent from "component/resource/BuildingComponent"
-import {RESOURCE} from "constant/Constants"
+import {MONEY, RESOURCE} from "constant/Constants"
 import {Building} from "interfaces"
 
 export default function InventoryPage() {
@@ -22,11 +21,9 @@ export default function InventoryPage() {
 		costToUpgrade: [{
 			resource: RESOURCE.iron,
 			amount: 120,
-			gainPerTick: 0
 		}, {
 			resource: RESOURCE.wood,
 			amount: 50,
-			gainPerTick: 0
 		}
 		],
 		image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",
@@ -35,11 +32,16 @@ export default function InventoryPage() {
 			{
 				resource: RESOURCE.wood,
 				amount: 2,
-				gainPerTick: 0
 			}
 		],
-		maintenanceFee: 13,
-		revenue: 20
+		maintenanceFee: [{
+			resource: MONEY.gold,
+			amount: 12
+		}],
+		revenue: [{
+			resource: MONEY.gold,
+			amount: 20
+		}]
 	}
 
 	return useObserver(() =>
@@ -69,59 +71,6 @@ export default function InventoryPage() {
 				}
 
 			</Grid>
-
-			{/*<Box sx={{display: "grid", gridTemplateColumns: "repeat(2, 1fr)"}} style={{margin: 40, gap: 10}}>*/}
-			{/*	<BuildingComponent building={{*/}
-			{/*		name: "Lumbermill",*/}
-			{/*		costToUpgrade: [{*/}
-			{/*			resource: RESOURCE.iron,*/}
-			{/*			amount: 120,*/}
-			{/*			gainPerTick: 0*/}
-			{/*		}, {*/}
-			{/*			resource: RESOURCE.wood,*/}
-			{/*			amount: 50,*/}
-			{/*			gainPerTick: 0*/}
-			{/*		}*/}
-			{/*		],*/}
-			{/*		image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",*/}
-			{/*		level: 1,*/}
-			{/*		produces: [*/}
-			{/*			{*/}
-			{/*				resource: RESOURCE.wood,*/}
-			{/*				amount: 2,*/}
-			{/*				gainPerTick: 0*/}
-			{/*			}*/}
-			{/*		],*/}
-			{/*		maintenanceFee: 13,*/}
-			{/*		revenue: 20*/}
-			{/*	}}/>*/}
-
-			{/*	<BuildingComponent building={{*/}
-			{/*		name: "Lumbermill",*/}
-			{/*		costToUpgrade: [{*/}
-			{/*			resource: RESOURCE.iron,*/}
-			{/*			amount: 120,*/}
-			{/*			gainPerTick: 0*/}
-			{/*		}, {*/}
-			{/*			resource: RESOURCE.wood,*/}
-			{/*			amount: 50,*/}
-			{/*			gainPerTick: 0*/}
-			{/*		}*/}
-			{/*		],*/}
-			{/*		image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",*/}
-			{/*		level: 1,*/}
-			{/*		produces: [*/}
-			{/*			{*/}
-			{/*				resource: RESOURCE.wood,*/}
-			{/*				amount: 2,*/}
-			{/*				gainPerTick: 0*/}
-			{/*			}*/}
-			{/*		],*/}
-			{/*		maintenanceFee: 13,*/}
-			{/*		revenue: 20*/}
-			{/*	}}/>*/}
-			{/*</Box>*/}
-
 		</>
 	)
 }

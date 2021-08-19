@@ -1,5 +1,5 @@
-import {Box, Button, Card, CardContent, Grid, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core"
-import {Building, ResourceHolder} from "interfaces"
+import {Button} from "@material-ui/core"
+import {Building, BuildingResource} from "interfaces"
 import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
 
@@ -15,124 +15,66 @@ export default function BuildingComponent(props: Props) {
 		history.push(ROUTES.resourceProducerDetail.computeUrl([{key: ":name", value: props.building.name}]))
 	}
 
-	const renderResources = (labelName: string, resources: ResourceHolder[] | undefined) => {
+	const renderResources = (resources: BuildingResource[] | undefined) => {
+		if (!resources) {
+			return
+		}
+
 		return (
-			<TableRow>
-				<TableCell>{labelName}</TableCell>
-				<TableCell>
-					<Box display={"flex"}>
-
-						{
-							resources?.map(res => (
-								<Box key={res.resource.name} display={"flex"} alignItems={"center"} style={{paddingLeft: 10}}>
-									<img src={res.resource.icon} height={32} alt={"resource picture"}/>
-									<p>{res.amount}</p>
-								</Box>
-							))
-						}
-					</Box>
-				</TableCell>
-			</TableRow>
+			<div className={"flex flex-row pl-2 items-center justify-center"}>
+				{
+					resources?.map(res => (
+						<div className={"flex flex-row items-center justify-center"}>
+							<img src={res.resource.icon} alt={"my resource"} className={"w-8"}/>
+							<p>{res.amount}</p>
+						</div>
+					))
+				}
+			</div>
 		)
-
 	}
 
 	return (
 
-		<Card style={{margin: 20}}>
-			<CardContent>
+		<div className={"m-2 shadow p-4"}>
+			<div className={"flex flex-row"} style={{justifyContent: "stretch"}}>
+				<div className={"flex flex-initial"}>
+					<img src={props.building.image} style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+						verticalAlign: "middle",
 
-				<Grid container spacing={2}>
-					<Grid item xs={4} style={{minHeight: 200}}>
-						<img src={props.building.image} style={{
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-							verticalAlign: "middle",
+						maxHeight: "128",
+						width: "100%",
+						border: "3px solid black"
+					}} alt={"resource building"}/>
+				</div>
 
-							maxHeight: "128",
-							width: "100%",
-							border: "3px solid black"
-						}} alt={"picture"}/>
+				<div className={"flex flex-auto"}>
 
-					</Grid>
-					<Grid item xs={8}>
-						<TableContainer>
+					<div className={"grid grid-cols-2 p-4 gap-2 items-center"} style={{width: "100%"}}>
+						<p>Name</p>
+						<p className={"place-self-center"}>{props.building.name}</p>
+						<p>Level</p>
+						<p className={"place-self-center"}>{props.building.level}</p>
+						<p>Maintenance fees</p>
+						{renderResources(props.building.maintenanceFee)}
+						<p>Cost to upgrade</p>
+						{renderResources(props.building.costToUpgrade)}
+						<p>Revenue</p>
+						{renderResources(props.building.revenue)}
+						<p>Produces</p>
+						{renderResources(props.building.produces)}
+					</div>
+				</div>
 
-							<Table size={"small"}>
-								<TableBody>
+			</div>
+			<div className={"grid grid-cols-2 gap-4 mt-4"}>
+				<Button variant={"contained"} color={"primary"} fullWidth>Level up</Button>
+				<Button variant={"contained"} color={"secondary"} fullWidth onClick={() => upgradeButtonOnClick()}>Upgrade options</Button>
+			</div>
 
-									<TableRow>
-										<TableCell>Name</TableCell>
-										<TableCell>{props.building.name}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Level</TableCell>
-										<TableCell>{props.building.level}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Maintenance fee</TableCell>
-										<TableCell>{props.building.maintenanceFee}</TableCell>
-									</TableRow>
-									{renderResources("Cost to upgrade: ", props.building.costToUpgrade)}
-									<TableRow>
-										<TableCell>Revenue</TableCell>
-										<TableCell>{props.building.revenue}</TableCell>
-									</TableRow>
-									{renderResources("Produces: ", props.building.produces)}
-								</TableBody>
-							</Table>
-						</TableContainer>
-					</Grid>
-
-					<Grid container item xs={12} spacing={2}>
-						<Grid item xs={6}>
-							<Button variant={"contained"} color={"primary"} fullWidth>Level up</Button>
-						</Grid>
-						<Grid item xs={6}>
-							<Button variant={"contained"} color={"secondary"} fullWidth onClick={() => upgradeButtonOnClick()}>Upgrade options</Button>
-						</Grid>
-					</Grid>
-				</Grid>
-
-
-			</CardContent>
-		</Card>
-
-		// <Card style={{margin: 20}}>
-		// 			<CardContent>
-		// 	<Grid container spacing={2}>
-		// 		<Grid item xs={12}>
-		// 				<Grid item xs={2}>
-		// 					<div style={{
-		// 						// display: "flex",
-		// 						alignItems: "center",
-		// 						justifyContent: "center",
-		// 						verticalAlign: "middle",
-		// 						// height: "100%", width: "100%",
-		// 						border: "3px solid black"
-		// 					}}><p style={{}}>Placeholder</p></div>
-		// 				</Grid>
-		// 				<Grid item xs={10}>
-		// 					<Grid item xs={6}>
-		// 						<TextField variant={"outlined"} value={props.resourceProducer.name} />
-		// 						<TextField variant={"outlined"} value={props.resourceProducer.name} />
-		// 						<TextField variant={"outlined"} value={props.resourceProducer.name} />
-		// 						<TextField variant={"outlined"} value={props.resourceProducer.name} />
-		// 					</Grid>
-		// 					{/*<Grid item xs={6}>*/}
-		// 					{/*	<TextField variant={"outlined"} value={props.resourceProducer.level} />*/}
-		// 					{/*	<TextField variant={"outlined"} value={props.resourceProducer.level} />*/}
-		// 					{/*	<TextField variant={"outlined"} value={props.resourceProducer.level} />*/}
-		// 					{/*	<TextField variant={"outlined"} value={props.resourceProducer.level} />*/}
-		// 					{/*	<TextField variant={"outlined"} value={props.resourceProducer.level} />*/}
-		//
-		// 					{/*</Grid>*/}
-		//
-		// 				</Grid>
-		// 		</Grid>
-		// 	</Grid>
-		// 			</CardContent>
-		// </Card>
+		</div>
 	)
 }

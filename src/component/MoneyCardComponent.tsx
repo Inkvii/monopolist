@@ -6,10 +6,6 @@ interface Props {
 
 export default function MoneyCardComponent(props: Props) {
 
-	const formatMoney = () => {
-		return Intl.NumberFormat("en-US", {style: "currency", currency: "EUR"}).format(props.money)
-	}
-
 	return (
 		<Box display={"flex"}>
 			<Box display={"flex"} flexGrow={1} justifyContent={"center"} alignItems={"center"}>
@@ -20,8 +16,9 @@ export default function MoneyCardComponent(props: Props) {
 								Card name that can be longer
 							</Grid>
 							<Grid container item xs={12} justifyContent={"center"}>
+								<img src={"resources/gold.PNG"} style={{height: 50, paddingRight: 10}} alt={"resource"}/>
 								<Typography variant={"h3"}>
-									{formatMoney()}
+									{props.money}
 								</Typography>
 							</Grid>
 						</Grid>
