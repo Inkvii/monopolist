@@ -1,16 +1,9 @@
-import {Box, Card, CardContent, Typography} from "@material-ui/core"
-
 export default function EmptyPage() {
 	return (
-		<Box display={"flex"} justifyContent={"center"} style={{marginTop: "25vh"}}>
-			<Card>
-				<CardContent>
-					<Typography variant={"h3"} style={{padding: 20}}>
-						This is just an empty page
-					</Typography>
-				</CardContent>
-			</Card>
-
-		</Box>
+		<div className={"flex justify-center"} style={{marginTop: "25vh"}}>
+			<div className={"flex shadow-lg p-16"}>
+				<h3 className={"text-5xl"}>This is just an empty page</h3>
+			</div>
+		</div>
 	)
 }

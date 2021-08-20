@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from 'react'
 import {Route, Switch, useLocation} from "react-router-dom"
-import {Grid} from "@material-ui/core"
 import LeftMenu from "component/LeftMenu"
 import {ROUTES} from "router/Routes"
 import * as workerTimers from "worker-timers"
@@ -27,23 +26,22 @@ function App() {
 	}, [])
 
 	return (
-		<Grid container>
-			<Grid item xs={12}>
-				<TopPanel/>
-			</Grid>
-			<Grid item xs={12} sm={12} md={3} lg={2} xl={2}>
-				<LeftMenu currentLocation={location.pathname}/>
-			</Grid>
+		<div className={"flex flex-col"}>
+			<TopPanel/>
+			<div className={"grid gap-10"} style={{gridTemplateColumns: "200px 4fr"}}>
+				<div>
+					<LeftMenu currentLocation={location.pathname}/>
+				</div>
+				<div>
+					<Switch>
+						<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
+						<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
+						<Route exact path={ROUTES.resourceProducerDetail.path} component={ROUTES.resourceProducerDetail.component}/>
+					</Switch>
+				</div>
+			</div>
 
-			<Grid item xs={12} sm={12} md={9} lg={10} xl={10}>
-				<Switch>
-					<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
-					<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
-					<Route exact path={ROUTES.resourceProducerDetail.path} component={ROUTES.resourceProducerDetail.component}/>
-				</Switch>
-			</Grid>
-		</Grid>
-
+		</div>
 	)
 }
 

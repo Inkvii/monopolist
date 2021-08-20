@@ -1,4 +1,3 @@
-import {Grid, Typography} from "@material-ui/core"
 import {ResourceContext} from "interfaces"
 
 interface Props {
@@ -8,21 +7,13 @@ interface Props {
 export default function ResourceBox(props: Props) {
 
 	return (
-		<Grid container style={{padding: 10}}>
-			<Grid container item xs={4} alignContent={"center"}>
-				<img src={props.resourceHolder.resource.icon} height={32} alt={"pic placeholder"}/>
-			</Grid>
-			<Grid container item xs={8}>
-				<Grid item xs={12}>
-					<Typography variant={"subtitle1"}>{props.resourceHolder.resource.name}</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant={"body2"}>{Math.floor(props.resourceHolder.amount)}</Typography>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant={"body2"}>(+{props.resourceHolder.gainPerTick}/min)</Typography>
-				</Grid>
-			</Grid>
-		</Grid>
+		<div className={"p-2 w-36 h-20"}>
+			<div className={"grid grid-cols-2 grid-rows-3 gap-x-3"}>
+				<img className={"row-span-3 align-middle"} src={props.resourceHolder.resource.icon} alt={"pic placeholder"}/>
+				<p>{props.resourceHolder.resource.name}</p>
+				<p>{Math.floor(props.resourceHolder.amount)}</p>
+				<p>+{props.resourceHolder.gainPerTick}/min</p>
+			</div>
+		</div>
 	)
 }

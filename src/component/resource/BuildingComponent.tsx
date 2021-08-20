@@ -1,4 +1,3 @@
-import {Button} from "@material-ui/core"
 import {Building, BuildingResource} from "interfaces"
 import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
@@ -24,7 +23,7 @@ export default function BuildingComponent(props: Props) {
 			<div className={"flex flex-row pl-2 items-center justify-center"}>
 				{
 					resources?.map(res => (
-						<div className={"flex flex-row items-center justify-center"}>
+						<div key={res.resource.name} className={"flex flex-row items-center justify-center"}>
 							<img src={res.resource.icon} alt={"my resource"} className={"w-8"}/>
 							<p>{res.amount}</p>
 						</div>
@@ -37,23 +36,13 @@ export default function BuildingComponent(props: Props) {
 	return (
 
 		<div className={"m-2 shadow p-4"}>
-			<div className={"flex flex-row"} style={{justifyContent: "stretch"}}>
-				<div className={"flex flex-initial"}>
-					<img src={props.building.image} style={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						verticalAlign: "middle",
-
-						maxHeight: "128",
-						width: "100%",
-						border: "3px solid black"
-					}} alt={"resource building"}/>
+			<div className={"flex flex-row"}>
+				<div className={""}>
+					<img src={props.building.image} className={"object-cover aspect-w-16 aspect-h-9"} alt={"resource building"}/>
 				</div>
 
 				<div className={"flex flex-auto"}>
-
-					<div className={"grid grid-cols-2 p-4 gap-2 items-center"} style={{width: "100%"}}>
+					<div className={"grid grid-flow-row-dense grid-cols-2 p-4 gap-2 items-center"} style={{width: "100%"}}>
 						<p>Name</p>
 						<p className={"place-self-center"}>{props.building.name}</p>
 						<p>Level</p>
@@ -71,8 +60,10 @@ export default function BuildingComponent(props: Props) {
 
 			</div>
 			<div className={"grid grid-cols-2 gap-4 mt-4"}>
-				<Button variant={"contained"} color={"primary"} fullWidth>Level up</Button>
-				<Button variant={"contained"} color={"secondary"} fullWidth onClick={() => upgradeButtonOnClick()}>Upgrade options</Button>
+				<button className={"bg-blue-700 rounded text-md text-white uppercase font-medium hover:bg-blue-800 p-2"}>Level up</button>
+				<button className={"bg-green-700 rounded text-md text-white uppercase font-medium hover:bg-green-800 p-2"}
+				        onClick={() => upgradeButtonOnClick()}>Upgrade options
+				</button>
 			</div>
 
 		</div>
