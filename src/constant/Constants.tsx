@@ -1,23 +1,27 @@
 import Building from "context/Building"
+import iron from "../assets/icons/iron.PNG"
+import gold from "../assets/icons/gold.PNG"
+import silver from "../assets/icons/silver.PNG"
+import wood from "../assets/icons/wood.PNG"
 
 export default class Resource {
 	name: string
-	icon: string
+	icon: any
 
-	constructor(name: string, icon: string) {
+	constructor(name: string, icon: any) {
 		this.name = name
 		this.icon = icon
 	}
 }
 
 export const RESOURCE = {
-	iron: new Resource("Iron ore", "resources/iron.PNG"),
-	wood: new Resource("Wood", "resources/wood.PNG"),
+	iron: new Resource("Iron ore", iron),
+	wood: new Resource("Wood", wood),
 }
 
 export const MONEY = {
-	gold: new Resource("Gold", "resources/gold.PNG"),
-	silver: new Resource("Silver", "resources/silver.PNG"),
+	gold: new Resource("Gold", gold),
+	silver: new Resource("Silver", silver),
 }
 
 export const ALL_RESOURCES = {...RESOURCE, ...MONEY}

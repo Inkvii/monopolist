@@ -21,9 +21,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
-    "pretty": true
+    "pretty": true,
+    "typeRoots": [
+      "src/types  "
+    ]
   },
   "include": [
-    "src"
+    "src",
+    "public"
   ]
 }
