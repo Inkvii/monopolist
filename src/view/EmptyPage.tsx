@@ -1,4 +1,4 @@
-import CounterComponent from "component/CounterComponent"
+import CounterComponent from "view/counter/CounterComponent"
 
 export default function EmptyPage() {
 	return (

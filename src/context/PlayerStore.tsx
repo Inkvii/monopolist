@@ -31,34 +31,6 @@ export class PlayerStore {
 		if (res !== undefined) res.amount += 1
 	}
 
-	// recalculateResourceGains() {
-	// 	console.info("Recalculating resource gains")
-	// 	// for each building gather all revenue into a map of resources
-	// 	// this.buildings.
-	// 	const mappedResources = new Map<Resource, number>()
-	// 	this.buildings.flatMap((building) => building.produces)
-	// 		.filter((val) => val !== undefined)
-	// 		.flatMap(value => value as BuildingResource)
-	// 		.forEach((production) => {
-	// 			const value = mappedResources.get(production.resource) || 0
-	// 			mappedResources.set(production.resource, value + production.amount)
-	// 		})
-	//
-	//
-	// 	let copyOfResources: ResourceContext[] = [...this.ownedResources]
-	//
-	// 	mappedResources.forEach((value, key) => {
-	// 		const newResource: ResourceContext | undefined = copyOfResources.find((val, index) => val.resource === key)
-	// 		if (!newResource) {
-	// 			copyOfResources.push(new ResourceContext(key, 0, value))
-	// 		} else {
-	// 			newResource.gainPerTick = value
-	// 		}
-	// 	})
-	//
-	// 	this.ownedResources = copyOfResources
-	// }
-
 	recalculateResourcesGainPerTick() {
 		const mappedProduction = new Map<Resource, number>()
 		this.buildings.flatMap((building) => building.produces)

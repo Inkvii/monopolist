@@ -1,4 +1,4 @@
-export default function BuildingsList() {
+export default function BuildingsListPage() {
 
 	return (
 		<div>
