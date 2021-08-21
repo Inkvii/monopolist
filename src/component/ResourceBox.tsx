@@ -13,7 +13,7 @@ export default function ResourceBox(props: Props) {
 				<img className={"row-span-3 align-middle"} src={props.resourceHolder.resource.icon} alt={"pic placeholder"}/>
 				<p>{props.resourceHolder.resource.name}</p>
 				<p>{Math.floor(props.resourceHolder.amount)}</p>
-				<p>+{props.resourceHolder.gainPerTick}/min</p>
+				<p>{props.resourceHolder.gainPerTick} / min</p>
 			</div>
 		</div>
 	)

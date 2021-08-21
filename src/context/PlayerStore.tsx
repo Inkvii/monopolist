@@ -1,12 +1,11 @@
-import Resource, {MONEY, RESOURCE} from "constant/Constants"
-import {Building, BuildingResource} from "interfaces"
+import Resource, {ALL_RESOURCES, BUILDINGS, MONEY, RESOURCE} from "constant/Constants"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
 import {Counter, CounterHolder} from "context/Counter"
 import ResourceContext from "context/ResourceContext"
+import Building from "context/Building"
 
 export class PlayerStore {
-	private _money: ResourceContext[] = []
 	private _ownedResources: ResourceContext[] = []
 	private _buildings: Building[] = []
 	private _counter: CounterHolder
@@ -32,157 +31,74 @@ export class PlayerStore {
 		if (res !== undefined) res.amount += 1
 	}
 
-	recalculateResourceGains() {
-		console.info("Recalculating resource gains")
-		// for each building gather all revenue into a map of resources
-		// this.buildings.
-		const mappedResources = new Map<Resource, number>()
+	// recalculateResourceGains() {
+	// 	console.info("Recalculating resource gains")
+	// 	// for each building gather all revenue into a map of resources
+	// 	// this.buildings.
+	// 	const mappedResources = new Map<Resource, number>()
+	// 	this.buildings.flatMap((building) => building.produces)
+	// 		.filter((val) => val !== undefined)
+	// 		.flatMap(value => value as BuildingResource)
+	// 		.forEach((production) => {
+	// 			const value = mappedResources.get(production.resource) || 0
+	// 			mappedResources.set(production.resource, value + production.amount)
+	// 		})
+	//
+	//
+	// 	let copyOfResources: ResourceContext[] = [...this.ownedResources]
+	//
+	// 	mappedResources.forEach((value, key) => {
+	// 		const newResource: ResourceContext | undefined = copyOfResources.find((val, index) => val.resource === key)
+	// 		if (!newResource) {
+	// 			copyOfResources.push(new ResourceContext(key, 0, value))
+	// 		} else {
+	// 			newResource.gainPerTick = value
+	// 		}
+	// 	})
+	//
+	// 	this.ownedResources = copyOfResources
+	// }
+
+	recalculateResourcesGainPerTick() {
+		const mappedProduction = new Map<Resource, number>()
 		this.buildings.flatMap((building) => building.produces)
-			.filter((val) => val !== undefined)
-			.flatMap(value => value as BuildingResource)
-			.forEach((production) => {
-				const value = mappedResources.get(production.resource) || 0
-				mappedResources.set(production.resource, value + production.amount)
+			.forEach((revenue) => {
+				const value = mappedProduction.get(revenue.resource) || 0
+				mappedProduction.set(revenue.resource, value + revenue.amount)
+			})
+
+		const mappedConsumption = new Map<Resource, number>()
+		this.buildings.flatMap((building) => building.consumes)
+			.forEach((consumption) => {
+				const value = mappedConsumption.get(consumption.resource) || 0
+				mappedConsumption.set(consumption.resource, value + consumption.amount)
 			})
 
 
 		let copyOfResources: ResourceContext[] = [...this.ownedResources]
 
-		mappedResources.forEach((value, key) => {
-			const newResource: ResourceContext | undefined = copyOfResources.find((val, index) => val.resource === key)
+		Object.values(ALL_RESOURCES).forEach((resource) => {
+			const production = mappedProduction.get(resource) || 0
+			const consumption = mappedConsumption.get(resource) || 0
+
+			const result = production - consumption
+			const newResource: ResourceContext | undefined = copyOfResources.find((val) => val.resource === resource)
 			if (!newResource) {
-				copyOfResources.push(new ResourceContext(key, 0, value))
-			} else {
-				newResource.gainPerTick = value
-			}
-		})
-
-		this.ownedResources = copyOfResources
-	}
-
-	recalculateMoneyGains() {
-		const mappedRevenue = new Map<Resource, number>()
-		this.buildings.flatMap((building) => building.revenue)
-			.filter((val) => val !== undefined)
-			.flatMap(value => value as BuildingResource)
-			.forEach((revenue) => {
-				const value = mappedRevenue.get(revenue.resource) || 0
-				mappedRevenue.set(revenue.resource, value + revenue.amount)
-			})
-
-		const mappedFee = new Map<Resource, number>()
-		this.buildings.flatMap((building) => building.maintenanceFee)
-			.forEach((fee) => {
-				const value = mappedFee.get(fee.resource) || 0
-				mappedFee.set(fee.resource, value + fee.amount)
-			})
-
-
-		let copyOfMoneys: ResourceContext[] = [...this.money]
-
-		Object.values(MONEY).forEach((moneyResource) => {
-			const revenue = mappedRevenue.get(moneyResource) || 0
-			const fee = mappedFee.get(moneyResource) || 0
-
-			const result = revenue - fee
-			const newResource: ResourceContext | undefined = copyOfMoneys.find((val) => val.resource === moneyResource)
-			if (!newResource) {
-				copyOfMoneys.push(new ResourceContext(moneyResource, 0, result))
+				copyOfResources.push(new ResourceContext(resource, 0, result))
 			} else {
 				newResource.gainPerTick = result
 			}
 
 		})
-		this.money = copyOfMoneys
+		this.ownedResources = copyOfResources
 	}
 
 
 	private generateDefaultInstance() {
 		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 99, 1.11))
-		this.buildings.push({
-			name: "Lumbermill",
-			isActive: true,
-			costToUpgrade: [{
-				resource: RESOURCE.iron,
-				amount: 120,
-			}, {
-				resource: RESOURCE.wood,
-				amount: 50,
-			}
-			],
-			image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",
-			level: 1,
-			produces: [
-				{
-					resource: RESOURCE.wood,
-					amount: 2,
-				}
-			],
-			maintenanceFee: [{
-				resource: MONEY.gold,
-				amount: 12
-			}],
-			revenue: [{
-				resource: MONEY.gold,
-				amount: 20
-			}]
-		})
-		this.buildings.push({
-			name: "Iron mine",
-			isActive: true,
-			costToUpgrade: [{
-				resource: RESOURCE.iron,
-				amount: 285,
-			}, {
-				resource: RESOURCE.wood,
-				amount: 124,
-			}
-			],
-			image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",
-			level: 1,
-			produces: [
-				{
-					resource: RESOURCE.iron,
-					amount: 7,
-				}
-			],
-			maintenanceFee: [{
-				resource: MONEY.gold,
-				amount: 13
-			}],
-			revenue: [{
-				resource: MONEY.gold,
-				amount: 20
-			}]
-		})
-		this.buildings.push({
-			name: "Silver mine",
-			isActive: true,
-			costToUpgrade: [{
-				resource: RESOURCE.iron,
-				amount: 69,
-			}, {
-				resource: RESOURCE.wood,
-				amount: 58,
-			}
-			],
-			image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",
-			level: 1,
-			produces: [],
-			maintenanceFee: [{
-				resource: MONEY.gold,
-				amount: 12
-			}],
-			revenue: [{
-				resource: MONEY.silver,
-				amount: 5
-			}, {
-				resource: MONEY.gold,
-				amount: 1
-			}
-			]
-		})
-		this.money.push(new ResourceContext(MONEY.gold, 0, 0))
+		this.buildings.push(BUILDINGS.lumbermill)
+		this.buildings.push(BUILDINGS.ironMine)
+		this.ownedResources.push(new ResourceContext(MONEY.gold, 0, 0))
 	}
 
 	get buildings(): Building[] {
@@ -192,16 +108,6 @@ export class PlayerStore {
 	set buildings(value: Building[]) {
 		this._buildings = value
 	}
-
-
-	get money(): ResourceContext[] {
-		return this._money
-	}
-
-	set money(value: ResourceContext[]) {
-		this._money = value
-	}
-
 
 	get ownedResources(): ResourceContext[] {
 		return this._ownedResources

@@ -1,8 +1,7 @@
-import {Building, BuildingResource} from "interfaces"
+import {BuildingResource} from "interfaces"
 import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
-import {useContext} from "react"
-import {playerContext} from "context/PlayerStore"
+import Building from "context/Building"
 
 interface Props {
 	building: Building
@@ -11,14 +10,12 @@ interface Props {
 export default function BuildingComponent(props: Props) {
 
 	const history = useHistory()
-	const playerStore = useContext(playerContext)
-
 
 	const upgradeButtonOnClick = () => {
 		history.push(ROUTES.resourceProducerDetail.computeUrl([{key: ":name", value: props.building.name}]))
 	}
 	const levelUpButtonOnClick = () => {
-		playerStore.recalculateResourceGains()
+		console.log("Level up button clicked")
 	}
 
 	const renderResources = (resources: BuildingResource[] | undefined) => {
@@ -59,10 +56,8 @@ export default function BuildingComponent(props: Props) {
 
 				<div className={"flex"}>
 					<div className={"grid grid-cols-2 p-4 gap-2 items-center"}>
-						<p>Maintenance fees</p>
-						{renderResources(props.building.maintenanceFee)}
-						<p>Revenue</p>
-						{renderResources(props.building.revenue)}
+						<p>Consumes</p>
+						{renderResources(props.building.consumes)}
 						<p>Produces</p>
 						{renderResources(props.building.produces)}
 						<p>Cost to upgrade</p>

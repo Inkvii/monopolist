@@ -1,9 +1,9 @@
 import {PlayerStore} from "context/PlayerStore"
 
 export default function doStuff(store: PlayerStore) {
-	store.recalculateMoneyGains()
+	store.recalculateResourcesGainPerTick()
 
-	store.money.forEach(value => value.amount += value.gainPerTick)
+	// store.money.forEach(value => value.amount += value.gainPerTick)
 	store.ownedResources.forEach(value => value.amount += value.gainPerTick)
 
 	// test counter

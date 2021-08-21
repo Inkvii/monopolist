@@ -4,6 +4,7 @@ import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
 import {playerContext} from "context/PlayerStore"
 import BuildingComponent from "component/resource/BuildingComponent"
+import {MONEY, RESOURCE} from "constant/Constants"
 
 export default function InventoryPage() {
 
@@ -16,10 +17,10 @@ export default function InventoryPage() {
 
 	return useObserver(() =>
 		<div>
-			<MoneyCardComponent money={playerStore.money}/>
+			<MoneyCardComponent money={playerStore.ownedResources.filter((val) => Object.values(MONEY).includes(val.resource))}/>
 			<div className={"grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-4 gap-10"}>
 				{
-					playerStore.ownedResources.map(holder => (
+					playerStore.ownedResources.filter(val => Object.values(RESOURCE).includes(val.resource)).map(holder => (
 							<div key={holder.resource.name} className={"shadow-md p-2 bg-gray-100"} onClick={() => onClickEvent(holder.resource.name)}>
 								<ResourceBox resourceHolder={holder}/>
 							</div>
