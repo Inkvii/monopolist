@@ -4,8 +4,6 @@ import {useObserver} from "mobx-react-lite"
 import {useContext} from "react"
 import {playerContext} from "context/PlayerStore"
 import BuildingComponent from "component/resource/BuildingComponent"
-import {MONEY, RESOURCE} from "constant/Constants"
-import {Building} from "interfaces"
 
 export default function InventoryPage() {
 
@@ -13,34 +11,6 @@ export default function InventoryPage() {
 
 	const onClickEvent = (name: string) => {
 		playerStore.incrementOwnedResourceAmount(name)
-	}
-
-	const testingBuilding: Building = {
-		name: "Lumbermill",
-		costToUpgrade: [{
-			resource: RESOURCE.iron,
-			amount: 120,
-		}, {
-			resource: RESOURCE.wood,
-			amount: 50,
-		}
-		],
-		image: "https://static.wikia.nocookie.net/charmfarm/images/0/0c/LargeLumberMillG.jpg",
-		level: 1,
-		produces: [
-			{
-				resource: RESOURCE.wood,
-				amount: 2,
-			}
-		],
-		maintenanceFee: [{
-			resource: MONEY.gold,
-			amount: 12
-		}],
-		revenue: [{
-			resource: MONEY.gold,
-			amount: 20
-		}]
 	}
 
 	return useObserver(() =>
@@ -58,12 +28,11 @@ export default function InventoryPage() {
 			</div>
 
 
-			<div className={"grid sm:grid-cols-1 md:grid-cols-1 xl:grid-cols-2 gap-5 m-4"}>
+			<div className={"grid sm:grid-cols-1 xl:grid-cols-2 gap-5 m-4"}>
 				{
-					["Lumber mill camp", "Lumbermill", "Lumber jack"].map((name) => {
-						const modifiedBuild = {...testingBuilding, name: name}
+					playerStore.buildings.map((building) => {
 						return (
-							<BuildingComponent key={modifiedBuild.name} building={modifiedBuild}/>
+							<BuildingComponent key={building.name} building={building}/>
 						)
 					})
 				}
