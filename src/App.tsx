@@ -19,6 +19,10 @@ function App() {
 			doStuff(playerStore)
 
 		}, 1000)
+
+		playerStore.recalculateMoneyGains()
+		playerStore.recalculateResourceGains()
+
 		return (() => {
 			workerTimers.clearInterval(heartbeat)
 		})

@@ -32,7 +32,7 @@ export default function BuildingComponent(props: Props) {
 					resources?.map(res => (
 						<div key={res.resource.name} className={"flex flex-row items-center justify-center"}>
 							<img src={res.resource.icon} alt={"my resource"} className={"w-8"}/>
-							<p>{res.amount}</p>
+							<p className={"mx-1"}>{res.amount}</p>
 						</div>
 					))
 				}

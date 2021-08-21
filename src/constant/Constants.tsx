@@ -15,4 +15,5 @@ export const RESOURCE = {
 
 export const MONEY = {
 	gold: new Resource("Gold", "resources/gold.PNG"),
+	silver: new Resource("Silver", "resources/silver.PNG"),
 }
