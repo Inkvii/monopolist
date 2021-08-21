@@ -10,6 +10,7 @@ export default function InventoryPage() {
 	const playerStore = useContext(playerContext)
 
 	const onClickEvent = (name: string) => {
+		// playerStore.ownedResources[0].amount += 1
 		playerStore.incrementOwnedResourceAmount(name)
 	}
 

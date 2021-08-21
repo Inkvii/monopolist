@@ -1,24 +1,35 @@
 import Resource, {MONEY, RESOURCE} from "constant/Constants"
-import {Building, BuildingResource, ResourceContext} from "interfaces"
+import {Building, BuildingResource} from "interfaces"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
+import {Counter, CounterHolder} from "context/Counter"
+import ResourceContext from "context/ResourceContext"
 
 export class PlayerStore {
 	private _money: ResourceContext[] = []
 	private _ownedResources: ResourceContext[] = []
 	private _buildings: Building[] = []
+	private _counter: CounterHolder
 
 	constructor() {
 		this.generateDefaultInstance() //for testing purposes only
+		this._counter = new CounterHolder([new Counter(0)])
 		makeAutoObservable(this)
+	}
+
+
+	get counter(): CounterHolder {
+		return this._counter
+	}
+
+	set counter(value: CounterHolder) {
+		this._counter = value
 	}
 
 	incrementOwnedResourceAmount(resourceName: string) {
 		console.info("incrementOwnedResourceAmount with name " + resourceName)
-		this.ownedResources = this.ownedResources.map(value => {
-			const amount = value.resource.name === resourceName ? value.amount + 1 : value.amount
-			return {...value, amount: amount}
-		})
+		const res = this.ownedResources.find(val => val.resource.name === resourceName)
+		if (res !== undefined) res.amount += 1
 	}
 
 	recalculateResourceGains() {
@@ -40,11 +51,7 @@ export class PlayerStore {
 		mappedResources.forEach((value, key) => {
 			const newResource: ResourceContext | undefined = copyOfResources.find((val, index) => val.resource === key)
 			if (!newResource) {
-				copyOfResources.push({
-					resource: key,
-					gainPerTick: value,
-					amount: 0
-				})
+				copyOfResources.push(new ResourceContext(key, 0, value))
 			} else {
 				newResource.gainPerTick = value
 			}
@@ -80,11 +87,7 @@ export class PlayerStore {
 			const result = revenue - fee
 			const newResource: ResourceContext | undefined = copyOfMoneys.find((val) => val.resource === moneyResource)
 			if (!newResource) {
-				copyOfMoneys.push({
-					resource: moneyResource,
-					gainPerTick: result,
-					amount: 0
-				})
+				copyOfMoneys.push(new ResourceContext(moneyResource, 0, result))
 			} else {
 				newResource.gainPerTick = result
 			}
@@ -95,11 +98,7 @@ export class PlayerStore {
 
 
 	private generateDefaultInstance() {
-		this.ownedResources.push({
-			resource: RESOURCE.wood,
-			gainPerTick: 1.11,
-			amount: 99
-		})
+		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 99, 1.11))
 		this.buildings.push({
 			name: "Lumbermill",
 			isActive: true,
@@ -183,7 +182,7 @@ export class PlayerStore {
 			}
 			]
 		})
-		this.money.push({resource: MONEY.gold, amount: 0, gainPerTick: 0})
+		this.money.push(new ResourceContext(MONEY.gold, 0, 0))
 	}
 
 	get buildings(): Building[] {
@@ -202,6 +201,7 @@ export class PlayerStore {
 	set money(value: ResourceContext[]) {
 		this._money = value
 	}
+
 
 	get ownedResources(): ResourceContext[] {
 		return this._ownedResources

@@ -1,11 +1,5 @@
 import Resource from "constant/Constants"
 
-export interface ResourceContext {
-	resource: Resource
-	amount: number
-	gainPerTick: number
-}
-
 export interface BuildingResource {
 	resource: Resource
 	amount: number

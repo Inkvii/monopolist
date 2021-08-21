@@ -1,4 +1,5 @@
-import {ResourceContext} from "interfaces"
+import ResourceContext from "context/ResourceContext"
+import {useObserver} from "mobx-react-lite"
 
 interface Props {
 	money: ResourceContext[]
@@ -6,7 +7,7 @@ interface Props {
 
 export default function MoneyCardComponent(props: Props) {
 
-	return (
+	return useObserver(() =>
 		<div className={"flex justify-center"}>
 			<div className={"flex shadow-lg justify-center items-center px-16 py-4"}>
 				{

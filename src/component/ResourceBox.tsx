@@ -1,4 +1,5 @@
-import {ResourceContext} from "interfaces"
+import ResourceContext from "context/ResourceContext"
+import {useObserver} from "mobx-react-lite"
 
 interface Props {
 	resourceHolder: ResourceContext
@@ -6,7 +7,7 @@ interface Props {
 
 export default function ResourceBox(props: Props) {
 
-	return (
+	return useObserver(() =>
 		<div className={"p-2 w-36 h-20"}>
 			<div className={"grid grid-cols-2 grid-rows-3 gap-x-3"}>
 				<img className={"row-span-3 align-middle"} src={props.resourceHolder.resource.icon} alt={"pic placeholder"}/>
