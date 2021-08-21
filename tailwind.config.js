@@ -10,7 +10,9 @@ module.exports = {
 		extend: {},
 	},
 	variants: {
-		extend: {},
+		extend: {
+			divideColor: ["group-hover"]
+		},
 	},
 	plugins: [
 		require('@tailwindcss/aspect-ratio'),

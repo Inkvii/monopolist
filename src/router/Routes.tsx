@@ -2,6 +2,7 @@ import InventoryPage from "view/InventoryPage"
 import EmptyPage from "view/EmptyPage"
 import React from "react"
 import BuildingDetail from "view/BuildingDetailPage"
+import BuildingsList from "view/BuildingsList"
 
 type PathVariable = {
 	key: string,
@@ -34,5 +35,6 @@ export default class Route {
 export const ROUTES = {
 	inventoryPage: new Route("/", "Inventory page", InventoryPage),
 	emptyPage: new Route("/empty", "Empty page", EmptyPage),
-	resourceProducerDetail: new Route("/resource/:name/detail", "Resource detail", BuildingDetail, true)
+	resourceProducerDetail: new Route("/resource/:name/detail", "Resource detail", BuildingDetail, true),
+	buildingsPage: new Route("/buildings/list", "Buildings menu", BuildingsList)
 }

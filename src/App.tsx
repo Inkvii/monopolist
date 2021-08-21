@@ -37,9 +37,9 @@ function App() {
 				</div>
 				<div>
 					<Switch>
-						<Route exact path={ROUTES.inventoryPage.path} component={ROUTES.inventoryPage.component}/>
-						<Route exact path={ROUTES.emptyPage.path} component={ROUTES.emptyPage.component}/>
-						<Route exact path={ROUTES.resourceProducerDetail.path} component={ROUTES.resourceProducerDetail.component}/>
+						{
+							Object.values(ROUTES).map(route => <Route key={route.path} exact path={route.path} component={route.component}/>)
+						}
 					</Switch>
 				</div>
 			</div>

@@ -39,7 +39,7 @@ export default function BuildingComponent(props: Props) {
 
 	return (
 
-		<div className={"m-2 shadow pb-4 flex flex-col rounded-t-md"}>
+		<div className={"shadow pb-4 flex flex-col rounded-t-md"}>
 			<div className={"flex justify-center bg-blue-100 py-2 rounded-t-md"}>
 				<p className={"text-lg"}>{props.building.name}</p>
 			</div>
