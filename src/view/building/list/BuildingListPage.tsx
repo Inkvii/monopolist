@@ -41,12 +41,9 @@ export default function BuildingListPage() {
 
 	return useObserver(() =>
 		<div className={"flex justify-center"}>
-
-			{/*<div>*/}
 			<div className={"flex flex-col justify-center self-center"}>
 				<AvailableBuildingListHolder/>
 			</div>
-			{/*</div>*/}
 		</div>
 	)
 }

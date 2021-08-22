@@ -50,9 +50,7 @@ export default function BuildingDetailPage() {
 	return useObserver(() => (
 		<div>
 			{name}
-
 			<BuildingDetail/>
-
 			<div>
 				<button className={"bg-green-900 text-white py-2 w-auto text-lg px-6 m-2"} onClick={() => goBack()}>Go back</button>
 			</div>

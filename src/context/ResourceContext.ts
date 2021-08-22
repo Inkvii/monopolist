@@ -1,7 +1,8 @@
 import Resource from "constant/Constants"
 import {makeAutoObservable} from "mobx"
+import {BuildingResource} from "interfaces"
 
-export default class ResourceContext {
+export default class ResourceContext implements BuildingResource {
 	private _resource: Resource
 	private _amount: number
 	private _gainPerTick: number
