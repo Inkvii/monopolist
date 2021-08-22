@@ -2,7 +2,7 @@ import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
 import Building from "context/Building"
 import {renderResources} from "service/ResourceService"
-import {observer, useObserver} from "mobx-react-lite"
+import {observer} from "mobx-react-lite"
 
 interface Props {
 	building: Building
@@ -70,7 +70,7 @@ export default function BuildingComponent(props: Props) {
 		)
 	})
 
-	return useObserver(() =>
+	return (
 
 		<div className={"shadow pb-4 flex flex-col rounded-t-md"}>
 			<Header/>

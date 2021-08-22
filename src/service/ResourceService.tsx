@@ -1,5 +1,4 @@
 import {BuildingResource} from "interfaces"
-import ResourceContext from "context/ResourceContext"
 
 export const renderResources = (resources: BuildingResource[] | undefined) => {
 	if (!resources) {
@@ -10,9 +9,9 @@ export const renderResources = (resources: BuildingResource[] | undefined) => {
 		<div className={"flex flex-row pl-2 items-center justify-center"}>
 			{
 				resources?.map(res => (
-					<div key={res.resource.name} className={"flex flex-row items-center justify-center"}>
+					<div key={res.resource.name} className={"flex flex-row items-center justify-center mx-2"}>
 						<img src={res.resource.icon} alt={"my resource"} className={"w-8"}/>
-						<p className={"mx-1"}>{res.amount}</p>
+						<p className={"mx-1.5"}>{res.amount}</p>
 					</div>
 				))
 			}
@@ -20,9 +19,9 @@ export const renderResources = (resources: BuildingResource[] | undefined) => {
 	)
 }
 
-export function hasEnoughOfResources(store: ResourceContext[], target: BuildingResource[]): boolean {
+export function hasEnoughOfResources(store: BuildingResource[], target: BuildingResource[]): boolean {
 	for (const resource of target) {
-		const resInStore: ResourceContext | undefined = store.find(res => res.resource === resource.resource)
+		const resInStore: BuildingResource | undefined = store.find(res => res.resource === resource.resource)
 		if (!resInStore) {
 			return false
 		}

@@ -2,6 +2,8 @@ import {PlayerStore} from "context/PlayerStore"
 import {makeAutoObservable} from "mobx"
 import Resource, {ALL_RESOURCES} from "constant/Constants"
 import ResourceContext from "context/ResourceContext"
+import {hasEnoughOfResources} from "service/ResourceService"
+import {BuildingResource} from "interfaces"
 
 export default class ResourceService {
 	private readonly playerStore: PlayerStore
@@ -50,6 +52,38 @@ export default class ResourceService {
 
 		})
 		this.playerStore.ownedResources = copyOfResources
+	}
+
+	minus(first: BuildingResource[] | ResourceContext[], second: BuildingResource[] | ResourceContext[]): BuildingResource[] | ResourceContext[] {
+		if (!hasEnoughOfResources(first, second)) {
+			throw new Error("Cannot calculate negative amount")
+		}
+
+		let result = [...first]
+
+		for (const resource of second) {
+			const resInStore: BuildingResource | ResourceContext | undefined = result.find(res => res.resource === resource.resource)
+			if (!resInStore) {
+				throw new Error(`Unexpected error - Could not find resource ${resource.resource.name} in first array`)
+			}
+			resInStore.amount -= resource.amount
+		}
+
+		return result
+	}
+
+	plus(first: ResourceContext[], second: ResourceContext[]): ResourceContext[] {
+		let result = [...first]
+
+		for (const resource of second) {
+			const resInStore: ResourceContext | undefined = result.find(res => res.resource === resource.resource)
+			if (!resInStore) {
+				result.push(resource)
+			} else {
+				resInStore.amount += resource.amount
+			}
+		}
+		return result
 	}
 
 }

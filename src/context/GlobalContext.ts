@@ -18,7 +18,7 @@ export default class GlobalContext {
 		this._counterStore = new CounterHolder([new Counter(0)])
 
 		//services
-		this._buildingService = new BuildingService(this.playerStore)
+		this._buildingService = new BuildingService(this)
 		this._resourceService = new ResourceService(this.playerStore)
 
 		makeAutoObservable(this)

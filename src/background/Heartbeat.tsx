@@ -6,7 +6,6 @@ export default function doStuff(store: GlobalContext) {
 		.forEach(building => store.buildingService.turnOffBuildingsWithoutNeededResources(building))
 	store.resourceService.recalculateResourcesGainPerTick()
 
-	// store.money.forEach(value => value.amount += value.gainPerTick)
 	store.playerStore.ownedResources.forEach(value => value.amount += value.gainPerTick)
 
 	// test counter

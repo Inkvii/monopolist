@@ -1,42 +1,56 @@
-import {PlayerStore} from "context/PlayerStore"
 import Building from "context/Building"
 import {hasEnoughOfResources} from "service/ResourceService"
 import ResourceContext from "context/ResourceContext"
 import {makeAutoObservable} from "mobx"
+import GlobalContext from "context/GlobalContext"
+import {BuildingResource} from "interfaces"
 
 export class BuildingService {
-	private store: PlayerStore
+	private globalContext: GlobalContext
 
-	constructor(store: PlayerStore) {
-		this.store = store
+	constructor(globalContext: GlobalContext) {
+		this.globalContext = globalContext
 		makeAutoObservable(this)
 	}
 
 
 	buyBuilding(building: Building) {
-		if (!hasEnoughOfResources(this.store.ownedResources, building.costToUpgrade)) {
-			console.debug("Cannot buy a building " + JSON.stringify(building))
-			return
+		try {
+			this.globalContext.playerStore.ownedResources = this.globalContext.resourceService.minus(this.globalContext.playerStore.ownedResources, building.costToUpgrade) as ResourceContext[]
+			console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
+			this.globalContext.playerStore.buildings.push(building)
+		} catch (error) {
+			console.warn("Cannot buy a building - " + error.message)
 		}
-
-		console.debug("Proceeding with building acquiring")
-
-		for (const resource of building.costToUpgrade) {
-			const resInStore: ResourceContext | undefined = this.store.ownedResources.find(res => res.resource === resource.resource)
-			if (!resInStore) {
-				throw new Error(`Unexpected error - Could not find resource ${resource.resource.name} in player store.`)
-			}
-			resInStore.amount -= resource.amount
-		}
-
-		console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
-		this.store.buildings.push(building)
 	}
 
 	turnOffBuildingsWithoutNeededResources(building: Building) {
-		if (!hasEnoughOfResources(this.store.ownedResources, building.consumes)) {
-			console.debug(`Buildings ${building.name} cannot produce anything due to missing resources`)
+		if (!hasEnoughOfResources(this.globalContext.playerStore.ownedResources, building.consumes)) {
+			console.warn(`Buildings ${building.name} cannot produce anything due to missing resources`)
 			building.isActive = false
+		}
+	}
+
+	calculateCostToUpgrade(resourceContext: ResourceContext[] | BuildingResource[], currentLevel: number, fixedNumber: number): ResourceContext[] | BuildingResource[] {
+		return [...resourceContext].map(res => {
+			return {...res, amount: Math.ceil(res.amount + (currentLevel / 100 * res.amount) + fixedNumber)}
+		})
+	}
+
+	levelUpBuilding(building: Building) {
+		if (!hasEnoughOfResources(this.globalContext.playerStore.ownedResources, building.costToUpgrade)) {
+			console.warn("Cannot level up a building")
+		}
+
+		try {
+			this.globalContext.playerStore.ownedResources = this.globalContext.resourceService.minus(this.globalContext.playerStore.ownedResources, building.costToUpgrade) as ResourceContext[]
+			console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
+			building.level++
+			building.costToUpgrade = this.calculateCostToUpgrade(building.costToUpgrade, building.level, 35)
+			building.produces = this.calculateCostToUpgrade(building.produces, building.level, 1)
+			building.consumes = this.calculateCostToUpgrade(building.consumes, building.level, 1)
+		} catch (error) {
+			console.warn("Cannot level up a building - " + error.message)
 		}
 	}
 }
