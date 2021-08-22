@@ -20,11 +20,12 @@
     "worker-timers": "^7.0.36"
   },
   "scripts": {
-    "start": "npm run tailwind && react-scripts start",
+    "start": "react-scripts start",
     "build": "npm run tailwind && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tailwind": "tailwindcss --jit build -i src/css/tailwind.pcss -o public/css.css",
+    "dev-tailwind": "tailwindcss build -i src/css/tailwind.pcss -o public/css.css",
+    "tailwind": "tailwindcss --jit build -i src/css/tailwind.pcss -o public/css.css --watch",
     "postBuild": "purgecss --css public/css.css --content public/index.html src/**/*.tsx --output public/css.css"
   },
   "eslintConfig": {

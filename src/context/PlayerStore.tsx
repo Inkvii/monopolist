@@ -1,9 +1,10 @@
-import Resource, {ALL_RESOURCES, BUILDINGS, MONEY, RESOURCE} from "constant/Constants"
+import Resource, {ALL_RESOURCES, MONEY, RESOURCE} from "constant/Constants"
 import {makeAutoObservable} from "mobx"
 import {createContext} from "react"
 import {Counter, CounterHolder} from "context/Counter"
 import ResourceContext from "context/ResourceContext"
 import Building from "context/Building"
+import {hasEnoughOfResources} from "service/ResourceService"
 
 export class PlayerStore {
 	private _ownedResources: ResourceContext[] = []
@@ -16,19 +17,10 @@ export class PlayerStore {
 		makeAutoObservable(this)
 	}
 
-
-	get counter(): CounterHolder {
-		return this._counter
-	}
-
-	set counter(value: CounterHolder) {
-		this._counter = value
-	}
-
 	incrementOwnedResourceAmount(resourceName: string) {
 		console.info("incrementOwnedResourceAmount with name " + resourceName)
 		const res = this.ownedResources.find(val => val.resource.name === resourceName)
-		if (res !== undefined) res.amount += 1
+		if (res !== undefined) res.amount += 10
 	}
 
 	recalculateResourcesGainPerTick() {
@@ -65,12 +57,37 @@ export class PlayerStore {
 		this.ownedResources = copyOfResources
 	}
 
+	buyBuilding(building: Building) {
+		if (!hasEnoughOfResources(this.ownedResources, building.costToUpgrade)) {
+			console.debug("Cannot buy a building " + JSON.stringify(building))
+			return
+		}
+
+		console.debug("Proceeding with building acquiring")
+
+		for (const resource of building.costToUpgrade) {
+			const resInStore: ResourceContext | undefined = this.ownedResources.find(res => res.resource === resource.resource)
+			if (!resInStore) {
+				throw new Error(`Unexpected error - Could not find resource ${resource.resource.name} in player store.`)
+			}
+			resInStore.amount -= resource.amount
+		}
+
+		console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
+		this.buildings.push(building)
+	}
 
 	private generateDefaultInstance() {
-		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 99, 1.11))
-		this.buildings.push(BUILDINGS.lumbermill)
-		this.buildings.push(BUILDINGS.ironMine)
+		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 140, 1.11))
 		this.ownedResources.push(new ResourceContext(MONEY.gold, 0, 0))
+	}
+
+	get counter(): CounterHolder {
+		return this._counter
+	}
+
+	set counter(value: CounterHolder) {
+		this._counter = value
 	}
 
 	get buildings(): Building[] {

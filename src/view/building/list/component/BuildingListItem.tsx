@@ -7,6 +7,7 @@ import ResourceContext from "context/ResourceContext"
 interface Props {
 	building: Building
 	ownedResources: ResourceContext[]
+	buyButtonOnClickCallback: Function
 }
 
 export default function BuildingListItem(props: Props) {
@@ -18,9 +19,6 @@ export default function BuildingListItem(props: Props) {
 		setBuyButtonEnabled(hasEnoughOfResources(props.ownedResources, props.building.costToUpgrade))
 	}, [props.building.costToUpgrade, props.ownedResources])
 
-	const buyButtonOnClick = () => {
-		console.log("Buying things right away")
-	}
 
 	return useObserver(() =>
 		<div className={"shadow-md my-4 pb-4 flex flex-1 flex-col"}>
@@ -49,7 +47,7 @@ export default function BuildingListItem(props: Props) {
 			<div className={"grid grid-cols-1 gap-4 mt-4 px-4"}>
 				<button className={"bg-blue-700 rounded text-md text-white uppercase font-medium hover:bg-blue-800 p-2 disabled:bg-gray-500"}
 				        disabled={!buyButtonEnabled}
-				        onClick={() => buyButtonOnClick()}>
+				        onClick={() => props.buyButtonOnClickCallback()}>
 					Buy
 				</button>
 
