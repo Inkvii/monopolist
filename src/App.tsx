@@ -5,22 +5,22 @@ import {ROUTES} from "router/Routes"
 import * as workerTimers from "worker-timers"
 import doStuff from "background/Heartbeat"
 import TopPanel from "component/TopPanel"
-import {context} from "context/GlobalContext"
+import {globalContext} from "context/GlobalContext"
 
 function App() {
 
 	const location = useLocation()
 
-	const store = useContext(context)
+	const context = useContext(globalContext)
 
 	useEffect(() => {
 		const heartbeat = workerTimers.setInterval(() => {
 			// do something many times
-			doStuff(store)
+			doStuff(context)
 
 		}, 1000)
 
-		store.resourceService.recalculateResourcesGainPerTick()
+		context.resourceService.recalculateResourcesGainPerTick()
 
 		return (() => {
 			workerTimers.clearInterval(heartbeat)

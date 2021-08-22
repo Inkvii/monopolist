@@ -42,4 +42,4 @@ export default class GlobalContext {
 	}
 }
 
-export const context = createContext(new GlobalContext())
+export const globalContext = createContext(new GlobalContext())

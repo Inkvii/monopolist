@@ -1,9 +1,9 @@
 import {useContext} from "react"
 import {useObserver} from "mobx-react-lite"
-import {context} from "context/GlobalContext"
+import {globalContext} from "context/GlobalContext"
 
 export default function CounterComponent() {
-	const store = useContext(context).counterStore
+	const store = useContext(globalContext).counterStore
 
 	const clickMe = () => {
 		console.log("Clicked")
