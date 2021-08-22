@@ -15,19 +15,19 @@ export default class ResourceService {
 	incrementOwnedResourceAmount(resourceName: string) {
 		console.info("incrementOwnedResourceAmount with name " + resourceName)
 		const res = this.playerStore.ownedResources.find(val => val.resource.name === resourceName)
-		if (res !== undefined) res.amount += 10
+		if (res !== undefined) res.amount += 100
 	}
 
 	recalculateResourcesGainPerTick() {
 		const mappedProduction = new Map<Resource, number>()
-		this.playerStore.buildings.flatMap((building) => building.produces)
+		this.playerStore.buildings.filter(building => building.isActive).flatMap((building) => building.produces)
 			.forEach((revenue) => {
 				const value = mappedProduction.get(revenue.resource) || 0
 				mappedProduction.set(revenue.resource, value + revenue.amount)
 			})
 
 		const mappedConsumption = new Map<Resource, number>()
-		this.playerStore.buildings.flatMap((building) => building.consumes)
+		this.playerStore.buildings.filter(building => building.isActive).flatMap((building) => building.consumes)
 			.forEach((consumption) => {
 				const value = mappedConsumption.get(consumption.resource) || 0
 				mappedConsumption.set(consumption.resource, value + consumption.amount)
