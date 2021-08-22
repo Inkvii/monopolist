@@ -4,23 +4,23 @@ import LeftMenu from "component/LeftMenu"
 import {ROUTES} from "router/Routes"
 import * as workerTimers from "worker-timers"
 import doStuff from "background/Heartbeat"
-import {playerContext} from "context/PlayerStore"
 import TopPanel from "component/TopPanel"
+import {context} from "context/GlobalContext"
 
 function App() {
 
 	const location = useLocation()
 
-	const playerStore = useContext(playerContext)
+	const store = useContext(context)
 
 	useEffect(() => {
 		const heartbeat = workerTimers.setInterval(() => {
 			// do something many times
-			doStuff(playerStore)
+			doStuff(store)
 
 		}, 1000)
 
-		playerStore.recalculateResourcesGainPerTick()
+		store.resourceService.recalculateResourcesGainPerTick()
 
 		return (() => {
 			workerTimers.clearInterval(heartbeat)

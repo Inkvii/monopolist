@@ -1,29 +1,29 @@
 import BuildingListItem from "view/building/list/component/BuildingListItem"
 import {BUILDINGS} from "constant/Constants"
 import {useContext} from "react"
-import {playerContext} from "context/PlayerStore"
 import {observer, useObserver} from "mobx-react-lite"
 import Building from "context/Building"
 import {Check} from "@material-ui/icons"
+import {context} from "context/GlobalContext"
 
 export default function BuildingListPage() {
-	const playerStore = useContext(playerContext)
+	const store = useContext(context)
 
 	const buyButtonOnClick = (building: Building) => {
 		console.log("Trying to buy things right away")
-		playerStore.buyBuilding(building)
+		store.buildingService.buyBuilding(building)
 	}
 
 	const AvailableBuildingListHolder = observer(() => {
 		const buildingsToBuy = Object.values(BUILDINGS)
-			.filter(building => !playerStore.buildings.includes(building))
+			.filter(building => !store.playerStore.buildings.includes(building))
 		if (buildingsToBuy.length > 0) {
 			return (
 				<div>
 					{
 						buildingsToBuy.map(building => <BuildingListItem key={building.name}
 						                                                 building={building}
-						                                                 ownedResources={playerStore.ownedResources}
+						                                                 ownedResources={store.playerStore.ownedResources}
 						                                                 buyButtonOnClickCallback={() => buyButtonOnClick(building)}/>)
 					}
 				</div>

@@ -1,12 +1,12 @@
-import {PlayerStore} from "context/PlayerStore"
+import GlobalContext from "context/GlobalContext"
 
-export default function doStuff(store: PlayerStore) {
-	store.recalculateResourcesGainPerTick()
+export default function doStuff(store: GlobalContext) {
+	store.resourceService.recalculateResourcesGainPerTick()
 
 	// store.money.forEach(value => value.amount += value.gainPerTick)
-	store.ownedResources.forEach(value => value.amount += value.gainPerTick)
+	store.playerStore.ownedResources.forEach(value => value.amount += value.gainPerTick)
 
 	// test counter
-	store.counter.counters[0].count += 2
+	store.counterStore.counters[0].count += 2
 
 }

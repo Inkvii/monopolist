@@ -1,4 +1,5 @@
 import {BuildingResource} from "interfaces"
+import {makeAutoObservable} from "mobx"
 
 export default class Building {
 	private _name: string
@@ -9,7 +10,6 @@ export default class Building {
 	private _consumes: BuildingResource[]
 	private _produces: BuildingResource[]
 
-
 	constructor(name: string, image: string, costToUpgrade: BuildingResource[] = [], consumes: BuildingResource[] = [], produces: BuildingResource[] = []) {
 		this._name = name
 		this._image = image
@@ -18,6 +18,7 @@ export default class Building {
 		this._costToUpgrade = costToUpgrade
 		this._consumes = consumes
 		this._produces = produces
+		makeAutoObservable(this)
 	}
 
 
