@@ -11,7 +11,8 @@ module.exports = {
 	},
 	variants: {
 		extend: {
-			divideColor: ["group-hover"]
+			divideColor: ["group-hover"],
+			backgroundColor: ["disabled"]
 		},
 	},
 	plugins: [

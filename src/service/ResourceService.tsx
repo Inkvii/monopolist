@@ -1,4 +1,5 @@
 import {BuildingResource} from "interfaces"
+import ResourceContext from "context/ResourceContext"
 
 export const renderResources = (resources: BuildingResource[] | undefined) => {
 	if (!resources) {
@@ -17,4 +18,19 @@ export const renderResources = (resources: BuildingResource[] | undefined) => {
 			}
 		</div>
 	)
+}
+
+export function hasEnoughOfResources(store: ResourceContext[], target: BuildingResource[]): boolean {
+	for (const resource of target) {
+		const resInStore: ResourceContext | undefined = store.find(res => res.resource === resource.resource)
+		if (!resInStore) {
+			return false
+		}
+
+		if (resInStore.amount < resource.amount) {
+			return false
+		}
+	}
+
+	return true
 }
