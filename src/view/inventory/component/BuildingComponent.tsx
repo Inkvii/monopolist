@@ -2,7 +2,7 @@ import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
 import Building from "context/Building"
 import {renderResources} from "service/ResourceService"
-import {observer} from "mobx-react-lite"
+import {observer, useObserver} from "mobx-react-lite"
 
 interface Props {
 	building: Building
@@ -21,21 +21,21 @@ export default function BuildingComponent(props: Props) {
 	}
 
 
-	const Header = () => {
+	const Header = observer(() => {
+		console.log("Rendering header")
 		return (
-			<div className={"flex justify-center bg-blue-100 py-2 rounded-t-md"}>
+			<div className={`flex justify-center ${props.building.isActive ? "bg-blue-100" : "bg-red-500"} py-2 rounded-t-md`}>
 				<p className={"text-lg"}>{props.building.name}</p>
 			</div>
 		)
-	}
+	})
 
 	const ImagePanel = observer(() => {
 		return (
 			<div className={"flex flex-col"}>
 
-				<div className={"flex flex-row justify-around"}>
+				<div className={"flex flex-row justify-center"}>
 					<p>Level {props.building.level}</p>
-					<p>{props.building.isActive ? "Active" : "Inactive"}</p>
 				</div>
 				<img src={props.building.image} className={"object-cover w-full"} alt={"resource building"}/>
 			</div>
@@ -70,7 +70,7 @@ export default function BuildingComponent(props: Props) {
 		)
 	})
 
-	return (
+	return useObserver(() =>
 
 		<div className={"shadow pb-4 flex flex-col rounded-t-md"}>
 			<Header/>
