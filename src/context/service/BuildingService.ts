@@ -32,4 +32,11 @@ export class BuildingService {
 		console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
 		this.store.buildings.push(building)
 	}
+
+	turnOffBuildingsWithoutNeededResources(building: Building) {
+		if (!hasEnoughOfResources(this.store.ownedResources, building.consumes)) {
+			console.debug(`Buildings ${building.name} cannot produce anything due to missing resources`)
+			building.isActive = false
+		}
+	}
 }
