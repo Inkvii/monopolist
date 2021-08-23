@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals'
 import {BrowserRouter} from "react-router-dom"
 import {CssBaseline} from "@material-ui/core"
 import "./css/tailwind.pcss"
+import "./mystyles.css"
 
 ReactDOM.render(
 	<React.StrictMode>

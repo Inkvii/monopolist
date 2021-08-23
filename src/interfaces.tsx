@@ -4,3 +4,7 @@ export interface BuildingResource {
 	resource: Resource
 	amount: number
 }
+
+export interface ManualClickableResource {
+	readonly manualRequiredClicks: number
+}

@@ -1,8 +1,8 @@
 import {useHistory} from "react-router-dom"
 import {ROUTES} from "router/Routes"
 import Building from "context/Building"
-import {renderResources} from "service/ResourceService"
 import {observer, useObserver} from "mobx-react-lite"
+import BuildingResourceTable from "view/building/component/BuildingResourceTable"
 
 interface Props {
 	building: Building
@@ -37,22 +37,7 @@ export default function BuildingComponent(props: Props) {
 				<div className={"flex flex-row justify-center"}>
 					<p>Level {props.building.level}</p>
 				</div>
-				<img src={props.building.image} className={"object-cover w-full"} alt={"resource building"}/>
-			</div>
-		)
-	})
-
-	const Description = observer(() => {
-		return (
-			<div className={"flex"}>
-				<div className={"grid grid-cols-2 p-4 gap-2 items-center"}>
-					<p>Consumes</p>
-					{renderResources(props.building.consumes)}
-					<p>Produces</p>
-					{renderResources(props.building.produces)}
-					<p>Cost to upgrade</p>
-					{renderResources(props.building.costToUpgrade)}
-				</div>
+				<img src={props.building.image} className={"object-cover max-h-40"} alt={"resource building"}/>
 			</div>
 		)
 	})
@@ -77,7 +62,7 @@ export default function BuildingComponent(props: Props) {
 
 			<div className={"flex flex-row px-4 pt-4"}>
 				<ImagePanel/>
-				<Description/>
+				<BuildingResourceTable building={props.building} className={"mx-4"}/>
 			</div>
 
 			<Footer/>

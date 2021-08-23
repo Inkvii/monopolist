@@ -35,6 +35,6 @@ export default class Route {
 export const ROUTES = {
 	inventoryPage: new Route("/", "Inventory page", InventoryPage),
 	emptyPage: new Route("/empty", "Empty page", EmptyPage),
-	resourceProducerDetail: new Route("/resource/:name/detail", "Resource detail", BuildingDetail, true),
+	resourceProducerDetail: new Route("/buildings/:name/detail", "Building detail", BuildingDetail, true),
 	buildingsPage: new Route("/buildings/list", "Buildings menu", BuildingListPage)
 }

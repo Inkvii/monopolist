@@ -1,8 +1,9 @@
 import Building from "context/Building"
-import {hasEnoughOfResources, renderResources} from "service/ResourceService"
+import {hasEnoughOfResources} from "service/ResourceService"
 import {useObserver} from "mobx-react-lite"
 import {useEffect, useState} from "react"
 import ResourceContext from "context/ResourceContext"
+import BuildingResourceTable from "view/building/component/BuildingResourceTable"
 
 interface Props {
 	building: Building
@@ -15,7 +16,6 @@ export default function BuildingListItem(props: Props) {
 	const [buyButtonEnabled, setBuyButtonEnabled] = useState<boolean>(false)
 
 	useEffect(() => {
-		console.log("Effect in effect")
 		setBuyButtonEnabled(hasEnoughOfResources(props.ownedResources, props.building.costToUpgrade))
 	}, [props.building.costToUpgrade, props.ownedResources])
 
@@ -27,28 +27,13 @@ export default function BuildingListItem(props: Props) {
 			</div>
 
 			<div className={"flex flex-row px-4 pt-4"}>
-				<div className={"flex flex-col"}>
-
-					<img src={props.building.image} className={"object-cover w-full"} alt={"resource building"}/>
-				</div>
-
-				<div className={"flex"}>
-					<div className={"grid grid-cols-2 p-4 gap-2 items-center"}>
-						<p>Consumes</p>
-						{renderResources(props.building.consumes)}
-						<p>Produces</p>
-						{renderResources(props.building.produces)}
-						<p>Cost to upgrade</p>
-						{renderResources(props.building.costToUpgrade)}
-					</div>
-				</div>
-
+				<img src={props.building.image} className={"object-cover max-h-40"} alt={"resource building"}/>
+				<BuildingResourceTable building={props.building} className={"mx-4"}/>
 			</div>
 			<div className={"grid grid-cols-1 gap-4 mt-4 px-4"}>
 				<button className={"bg-blue-700 rounded text-md text-white uppercase font-medium hover:bg-blue-800 p-2 disabled:bg-gray-500"}
 				        disabled={!buyButtonEnabled}
-				        onClick={() => props.buyButtonOnClickCallback()}>
-					Buy
+				        onClick={() => props.buyButtonOnClickCallback()}>Buy
 				</button>
 
 			</div>

@@ -1,17 +1,19 @@
 import Resource from "constant/Constants"
 import {makeAutoObservable} from "mobx"
-import {BuildingResource} from "interfaces"
+import {BuildingResource, ManualClickableResource} from "interfaces"
 
-export default class ResourceContext implements BuildingResource {
+export default class ResourceContext implements BuildingResource, ManualClickableResource {
 	private _resource: Resource
 	private _amount: number
 	private _gainPerTick: number
+	readonly manualRequiredClicks: number
 
 
-	constructor(resource: Resource, amount: number, gainPerTick: number) {
+	constructor(resource: Resource, amount: number, gainPerTick: number, manualRequiredClicks: number = 5) {
 		this._resource = resource
 		this._amount = amount
 		this._gainPerTick = gainPerTick
+		this.manualRequiredClicks = manualRequiredClicks
 		makeAutoObservable(this)
 	}
 

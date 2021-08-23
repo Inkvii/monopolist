@@ -14,25 +14,28 @@ export default function InventoryPage() {
 	const context = useContext(globalContext)
 	const history = useHistory()
 
-	const onClickEvent = (name: string) => {
-		context.resourceService.incrementOwnedResourceAmount(name)
-	}
-
 	const goToBuildingView = () => {
 		history.push(ROUTES.buildingsPage.path)
+	}
+
+	const useCheat = () => {
+		context.playerStore.ownedResources.forEach(res => {
+			context.resourceService.incrementOwnedResourceAmount(res.resource.name)
+		})
 	}
 
 	const ResourcesPanel = observer(() =>
 		<div>
 			<MoneyCardComponent money={context.playerStore.ownedResources.filter((val) => Object.values(MONEY).includes(val.resource))}/>
-			<div className={"grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-4 gap-10"}>
+			<div>
+				<button className={"p-4 bg-green-700 text-white"} onClick={useCheat}>Add funds</button>
+			</div>
+			<div className={"grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 m-4 gap-10 mb-20"}>
 				{
 					context.playerStore.ownedResources
 						.filter(val => Object.values(RESOURCE).includes(val.resource))
 						.map(holder => (
-								<div key={holder.resource.name} className={"shadow-md p-2 bg-gray-100"} onClick={() => onClickEvent(holder.resource.name)}>
-									<ResourceBox resourceHolder={holder}/>
-								</div>
+								<ResourceBox key={holder.resource.name} resourceHolder={holder}/>
 							)
 						)
 				}

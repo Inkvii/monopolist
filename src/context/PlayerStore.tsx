@@ -15,7 +15,7 @@ export class PlayerStore {
 
 
 	private generateDefaultInstance() {
-		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 140, 0))
+		this.ownedResources.push(new ResourceContext(RESOURCE.wood, 140, 0, 3))
 		this.ownedResources.push(new ResourceContext(MONEY.gold, 1000, 0))
 	}
 

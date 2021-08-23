@@ -14,10 +14,10 @@ export default class ResourceService {
 		makeAutoObservable(this)
 	}
 
-	incrementOwnedResourceAmount(resourceName: string) {
+	incrementOwnedResourceAmount(resourceName: string, amount: number = 100) {
 		console.info("incrementOwnedResourceAmount with name " + resourceName)
 		const res = this.playerStore.ownedResources.find(val => val.resource.name === resourceName)
-		if (res !== undefined) res.amount += 100
+		if (res !== undefined) res.amount += amount
 	}
 
 	recalculateResourcesGainPerTick() {
