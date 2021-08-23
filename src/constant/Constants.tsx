@@ -11,24 +11,26 @@ import forest from "../assets/icons/forest.PNG"
 export default class Resource {
 	name: string
 	icon: any
+	tier: number
 
-	constructor(name: string, icon: any) {
+	constructor(name: string, icon: any, tier: number) {
 		this.name = name
 		this.icon = icon
+		this.tier = tier
 	}
 }
 
 export const RESOURCE = {
-	ironOre: new Resource("Iron ore", iron),
-	ironIngot: new Resource("Iron ingot", ironIngot),
-	wood: new Resource("Wood", wood),
-	woodenPlank: new Resource("Wooden plank", woodenPlank),
-	stone: new Resource("Stone", stone)
+	ironOre: new Resource("Iron ore", iron, 1),
+	ironIngot: new Resource("Iron ingot", ironIngot, 2),
+	wood: new Resource("Wood", wood, 1),
+	woodenPlank: new Resource("Wooden plank", woodenPlank, 2),
+	stone: new Resource("Stone", stone, 1)
 }
 
 export const MONEY = {
-	gold: new Resource("Gold", gold),
-	silver: new Resource("Silver", silver),
+	gold: new Resource("Gold", gold, 1),
+	silver: new Resource("Silver", silver, 2),
 }
 
 export const ALL_RESOURCES = {...RESOURCE, ...MONEY}

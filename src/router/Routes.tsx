@@ -3,6 +3,7 @@ import EmptyPage from "view/EmptyPage"
 import React from "react"
 import BuildingDetail from "view/building/detail/BuildingDetailPage"
 import BuildingListPage from "view/building/list/BuildingListPage"
+import TradingPage from "view/trading/TradingPage"
 
 type PathVariable = {
 	key: string,
@@ -36,5 +37,6 @@ export const ROUTES = {
 	inventoryPage: new Route("/", "Inventory page", InventoryPage),
 	emptyPage: new Route("/empty", "Empty page", EmptyPage),
 	resourceProducerDetail: new Route("/buildings/:name/detail", "Building detail", BuildingDetail, true),
-	buildingsPage: new Route("/buildings/list", "Buildings menu", BuildingListPage)
+	buildingsPage: new Route("/buildings/list", "Buildings menu", BuildingListPage),
+	tradingPage: new Route("/trading", "Trading post", TradingPage)
 }

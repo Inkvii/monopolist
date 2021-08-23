@@ -2,6 +2,7 @@ import ResourceContext from "context/ResourceContext"
 import {observer, useObserver} from "mobx-react-lite"
 import {useContext, useEffect, useState} from "react"
 import {globalContext} from "context/GlobalContext"
+import {ResourceData} from "component/resource/ResourceData"
 
 interface Props {
 	resourceHolder: ResourceContext
@@ -30,17 +31,6 @@ export default function ResourceBox(props: Props) {
 		</div>
 	)
 }
-
-const ResourceData = observer((props: Props) => {
-	return (
-		<div className={"grid grid-cols-2 gap-x-3 p-2 flex-grow"}>
-			<img className={"row-span-3 align-middle max-h-20 max-w-20"} src={props.resourceHolder.resource.icon} alt={"pic placeholder"}/>
-			<p>{props.resourceHolder.resource.name}</p>
-			<p>{Math.floor(props.resourceHolder.amount)}</p>
-			<p>{props.resourceHolder.gainPerTick} / min</p>
-		</div>
-	)
-})
 
 
 const ProgressBar = observer((props: { currentValue: number, maxValue: number, callback: Function }) => {
