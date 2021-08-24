@@ -31,7 +31,7 @@ export default function TradingPage() {
 			<ExchangePanel selectedResource={selectedResource}/>
 			<div className={"flex justify-around"}>
 				<Menu callback={buyResources} text={"Buy"} buttonColor={"bg-green-700"}/>
-				<ResourceGraph/>
+				<ResourceGraph selectedResource={selectedResource} className={"w-1/2"}/>
 				<Menu callback={sellResources} text={"Sell"} buttonColor={"bg-blue-700"}/>
 			</div>
 		</div>
