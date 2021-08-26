@@ -5,14 +5,12 @@ interface Props {
 	currentMoneyAmount: number,
 	moneyResource: Resource,
 	cost: number,
-	validateTransaction: (canProceed: boolean) => void
 	className?: string
 }
 
 export default function ExchangeSummary(props: Props) {
 
 	const MoneyIcon = () => <img src={props.moneyResource?.icon} width={32} alt={""} className={"mx-2"}/>
-
 
 	return useObserver(() =>
 		<div className={`flex flex-col text-xl p-4 m-4 w-1/4 ${props.className}`}>

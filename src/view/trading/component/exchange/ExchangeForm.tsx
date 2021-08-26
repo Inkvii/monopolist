@@ -22,7 +22,18 @@ export default function ExchangeForm(props: Props) {
 
 	const magicNumber = 10
 
+	const completeTransaction = () => {
+		if (!props.selectedResource || !selectedAmount || !canProceed || !moneyResource) {
+			return
+		}
 
+		if (sellMode) {
+			context.resourceService.incrementOwnedResourceAmount(props.selectedResource.resource.name, -1 * selectedAmount)
+		} else {
+			context.resourceService.incrementOwnedResourceAmount(props.selectedResource.resource.name, selectedAmount)
+		}
+		context.resourceService.incrementOwnedResourceAmount(moneyResource.resource.name, calculateTransactionAmount)
+	}
 
 	const calculateTransactionAmount = useMemo((): number => {
 		return (selectedAmount ?? 0) * magicNumber * (sellMode ? 1 : -1)
@@ -32,6 +43,20 @@ export default function ExchangeForm(props: Props) {
 	useEffect(() => {
 		console.log("Changed amount: " + selectedAmount)
 	}, [selectedAmount])
+
+	useEffect(() => {
+		console.group("Can proceed with transaction")
+		const isResourceSelected = props.selectedResource !== undefined
+		console.debug("Resource is selected: " + isResourceSelected)
+		const hasEnoughMoney = (moneyResource?.amount ?? 0) + calculateTransactionAmount >= 0
+		console.debug("Has enough money: " + hasEnoughMoney)
+		const hasEnoughResource = (props.selectedResource?.amount ?? 0) + (selectedAmount ?? 0) * (sellMode ? -1 : 1) >= 0
+		console.debug("Has enough resources: " + hasEnoughResource)
+
+		setCanProceed(isResourceSelected && hasEnoughMoney && hasEnoughResource)
+		console.groupEnd()
+		// eslint-disable-next-line
+	}, [moneyResource?.amount, selectedAmount])
 
 	return useObserver(() =>
 		<div className={"flex flex-col items-center"}>
@@ -51,10 +76,13 @@ export default function ExchangeForm(props: Props) {
 			<ExchangeSummary currentMoneyAmount={moneyResource?.amount ?? 0}
 			                 moneyResource={moneyResource?.resource ?? MONEY.gold}
 			                 cost={calculateTransactionAmount}
-			                 validateTransaction={setCanProceed} className={"self-end mr-24"}/>
+			                 className={"self-end mr-24"}/>
 
 
-			<button className={"bg-green-700 px-6 py-3 mt-4 uppercase text-white text-md self-center"} disabled={!canProceed}>Complete trade
+			<button
+				className={"bg-green-700 hover:bg-green-800 transition-colors duration-500 px-6 py-3 mt-4 uppercase text-white text-md self-center disabled:bg-gray-700"}
+				disabled={!canProceed} onClick={() => completeTransaction()}>
+				Complete trade
 			</button>
 
 		</div>

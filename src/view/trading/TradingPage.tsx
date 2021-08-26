@@ -32,7 +32,7 @@ export default function TradingPage() {
 
 				<div className={"shadow-md p-4 xl:w-8/12 lg:w-11/12 md:w-full"}>
 					<div className={"flex justify-center"}>
-						<ResourceGraph className={"w-1/2"}/>
+						<ResourceGraph className={"w-1/2"} selectedResource={selectedResource}/>
 					</div>
 					<ExchangeWindow selectedResource={selectedResource}/>
 					<ExchangeForm selectedResource={selectedResource}/>

@@ -1,8 +1,9 @@
 import {useState} from "react"
 import LineGraph from "component/chart/LineGraph"
+import ResourceContext from "context/ResourceContext"
 
 interface Props {
-	//selectedResource?: ResourceContext
+	selectedResource?: ResourceContext
 	className?: string
 }
 
@@ -15,8 +16,8 @@ export default function ResourceGraph(props: Props) {
 
 	return (
 		<div className={props.className}>
-			{/*<LineGraph labelName={props.selectedResource?.resource.name ?? "No resource was selected"} axisX={axisX} axisY={axisY}/>*/}
-			<LineGraph labelName={"No resource was selected"} axisX={axisX} axisY={axisY}/>
+			<LineGraph labelName={props.selectedResource?.resource.name ?? "No resource was selected"} axisX={axisX} axisY={axisY}/>
+			{/*<LineGraph labelName={"No resource was selected"} axisX={axisX} axisY={axisY}/>*/}
 		</div>
 	)
 }
