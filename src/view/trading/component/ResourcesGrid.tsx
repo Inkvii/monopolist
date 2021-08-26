@@ -17,7 +17,7 @@ export default function ResourcesGrid(props: Props) {
 			{
 				props.playerStore.ownedResources.filter(res => !Object.values(MONEY).includes(res.resource)).map(res =>
 					<div key={res.resource.name} className={`${res === props.selectedResource ? "border-purple-500 border-2 rounded" : ""}`}>
-						<div className={`select-none shadow-md p-2 bg-gray-100`}
+						<div className={`select-none shadow-md p-2 bg-gray-100 h-full `}
 						     onClick={() => props.onSelectResourceCallback(res)}>
 							<ResourceData resourceHolder={res}/>
 						</div>

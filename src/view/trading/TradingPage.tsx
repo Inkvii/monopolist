@@ -2,10 +2,10 @@ import {useObserver} from "mobx-react-lite"
 import {useContext, useState} from "react"
 import {globalContext} from "context/GlobalContext"
 import ResourceContext from "context/ResourceContext"
-import ExchangePanel from "view/trading/component/exchange/ExchangePanel"
 import ResourcesGrid from "view/trading/component/ResourcesGrid"
-import Menu from "view/trading/component/Menu"
 import ResourceGraph from "view/trading/component/ResourceGraph"
+import ExchangeWindow from "view/trading/component/exchange/component/ExchangeWindow"
+import ExchangeForm from "view/trading/component/exchange/ExchangeForm"
 
 export default function TradingPage() {
 	const context = useContext(globalContext)
@@ -26,13 +26,18 @@ export default function TradingPage() {
 	}
 
 	return useObserver(() =>
-		<div>
+		<div className={"mb-40"}>
 			<ResourcesGrid playerStore={context.playerStore} onSelectResourceCallback={setSelectedResource} selectedResource={selectedResource}/>
-			<ExchangePanel selectedResource={selectedResource}/>
-			<div className={"flex justify-around"}>
-				<Menu callback={buyResources} text={"Buy"} buttonColor={"bg-green-700"}/>
-				<ResourceGraph selectedResource={selectedResource} className={"w-1/2"}/>
-				<Menu callback={sellResources} text={"Sell"} buttonColor={"bg-blue-700"}/>
+			<div className={"flex justify-center"}>
+
+				<div className={"shadow-md p-4 xl:w-8/12 lg:w-11/12 md:w-full"}>
+					<div className={"flex justify-center"}>
+						<ResourceGraph className={"w-1/2"}/>
+					</div>
+					<ExchangeWindow selectedResource={selectedResource}/>
+					<ExchangeForm selectedResource={selectedResource}/>
+				</div>
+
 			</div>
 		</div>
 	)
