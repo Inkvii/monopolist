@@ -36,8 +36,13 @@ export default function ExchangeForm(props: Props) {
 	}
 
 	const calculateTransactionAmount = useMemo((): number => {
-		return (selectedAmount ?? 0) * magicNumber * (sellMode ? 1 : -1)
-	}, [selectedAmount, sellMode])
+		if (!props.selectedResource) {
+			return 0
+		}
+		return Math.floor((selectedAmount ?? 0) * context.tradingService.getLastResourcePrice(props.selectedResource.resource) * (sellMode ? 1 : -1))
+
+		// eslint-disable-next-line
+	}, [selectedAmount, sellMode, props])
 
 
 	useEffect(() => {
@@ -56,7 +61,7 @@ export default function ExchangeForm(props: Props) {
 		setCanProceed(isResourceSelected && hasEnoughMoney && hasEnoughResource)
 		console.groupEnd()
 		// eslint-disable-next-line
-	}, [moneyResource?.amount, selectedAmount])
+	}, [moneyResource?.amount, selectedAmount, calculateTransactionAmount])
 
 	return useObserver(() =>
 		<div className={"flex flex-col items-center"}>

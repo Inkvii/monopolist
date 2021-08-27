@@ -38,7 +38,7 @@ export default function LineGraph(props: Props) {
 	}
 
 	const options: ChartOptions = {
-		// aspectRatio: 10,
+		animation: false
 
 	}
 
