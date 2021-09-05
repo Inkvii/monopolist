@@ -17,12 +17,12 @@ export default function TradingPage() {
 			<div className={"flex justify-center"}>
 
 				<div className={"shadow-md p-4 xl:w-8/12 lg:w-11/12 md:w-full"}>
+					<ExchangeWindow selectedResource={selectedResource}/>
 					<div className={"flex justify-center"}>
 						<ResourceGraph className={"w-1/2"}
 						               resource={selectedResource?.resource}
 						               history={context.tradingService.getReducedListOfResourceHistory(selectedResource?.resource, 10)}/>
 					</div>
-					<ExchangeWindow selectedResource={selectedResource}/>
 					<ExchangeForm selectedResource={selectedResource}/>
 				</div>
 
