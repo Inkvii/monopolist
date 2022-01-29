@@ -23,7 +23,7 @@
     "baseUrl": "./src",
     "pretty": true,
     "typeRoots": [
-      "src/types  "
+      "src/types"
     ]
   },
   "include": [

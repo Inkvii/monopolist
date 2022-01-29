@@ -1,7 +1,7 @@
 import {PlayerStore} from "context/PlayerStore"
 import {BuildingService} from "context/service/BuildingService"
 import {createContext} from "react"
-import {Counter, CounterHolder} from "context/Counter"
+import {counterHolder, CounterHolder} from "context/Counter"
 import {makeAutoObservable} from "mobx"
 import ResourceService from "context/service/ResourceService"
 import TradingStore from "context/TradingStore"
@@ -19,7 +19,7 @@ export default class GlobalContext {
 	constructor() {
 		// stores
 		this._playerStore = new PlayerStore()
-		this._counterStore = new CounterHolder([new Counter(0)])
+		this._counterStore = counterHolder
 		this._tradingStore = new TradingStore()
 
 		//services

@@ -19,7 +19,7 @@ export class BuildingService {
 			this.globalContext.playerStore.ownedResources = this.globalContext.resourceService.minus(this.globalContext.playerStore.ownedResources, building.costToUpgrade) as ResourceContext[]
 			console.debug(`Funds for building ${building.name} are acuqired. Adding it to player's buildings`)
 			this.globalContext.playerStore.buildings.push(building)
-		} catch (error) {
+		} catch (error: any) {
 			console.warn("Cannot buy a building - " + error.message)
 		}
 	}
@@ -32,7 +32,9 @@ export class BuildingService {
 	}
 
 	calculateCostToUpgrade(resourceContext: ResourceContext[] | BuildingResource[], currentLevel: number, fixedNumber: number): ResourceContext[] | BuildingResource[] {
+		// @ts-ignore
 		return [...resourceContext].map(res => {
+			// @ts-ignore
 			return {...res, amount: Math.ceil(res.amount + (currentLevel / 100 * res.amount) + fixedNumber)}
 		})
 	}
@@ -49,8 +51,8 @@ export class BuildingService {
 			building.costToUpgrade = this.calculateCostToUpgrade(building.costToUpgrade, building.level, 35)
 			building.produces = this.calculateCostToUpgrade(building.produces, building.level, 1)
 			building.consumes = this.calculateCostToUpgrade(building.consumes, building.level, 1)
-		} catch (error) {
-			console.warn("Cannot level up a building - " + error.message)
+		} catch (error: any) {
+			console.warn("Cannot level up a building - " + error?.message)
 		}
 	}
 }
